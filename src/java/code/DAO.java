@@ -1,0 +1,26 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package code;
+
+import javax.ejb.Singleton;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+/**
+ *
+ * @author Fernando
+ */
+@Singleton
+public class DAO implements DAOLocal {
+
+    @PersistenceContext(unitName = "TPWEBPU")
+    private EntityManager em;
+
+    @Override
+    public EntityManager getEntityManager() {
+        return em;
+    }
+}

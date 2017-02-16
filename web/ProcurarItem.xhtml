@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Procurar Item</title>
+    </h:head>
+    <h:body>
+        <p>Procurar Item</p>
+        <h:form>
+            Id do Item:<br/>
+            <h:inputText id="idItem"></h:inputText><br/><br/>
+            
+            //Mostrat Informação do Item<br/><br/>
+            
+            Licitaçaõ:<br/>
+            <h:inputText id="licitacao"></h:inputText>
+            <h:commandButton value="Licitar"></h:commandButton><br/><br/>
+            
+            <h:commandButton value="Seguir/Desseguir Item"></h:commandButton><br/><br/>
+            
+            Mensagem<br/>
+            <h:inputTextarea id="mensagem"></h:inputTextarea><br/>
+            <h:commandButton value="Enviar Mensagem"></h:commandButton><br/><br/>
+            
+            Denuncia<br/>
+            <h:inputTextarea id="denuncia"></h:inputTextarea><br/>
+            <h:commandButton value="Denunciar Item"></h:commandButton>
+            <h:commandButton value="Denunciar Utilizador"></h:commandButton><br/><br/>
+            
+            <h:commandLink value="Voltar" action="menuCliente"></h:commandLink>
+        </h:form>
+    </h:body>
+</html>
+

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./newTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <ui:define name="top">
+        Pedido de Adesão
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Nome:"
+                               for="nome" />
+                <h:inputText id="nome"
+                             value="#{utilizadorController.nome}"
+                             required="true"                             
+                             requiredMessage="Falta o nome"
+
+                             />
+
+                <h:outputLabel value="Morada:"
+                               for="morada"/>
+                <h:inputText id="morada"
+                             value="#{utilizadorController.morada}"
+                             required="true"
+                             requiredMessage="Falta a morada"
+                             />    
+
+                <h:outputLabel value="Username:"
+                               for="username" />
+                <h:inputText id="username"
+                             value="#{utilizadorController.username}"
+                             required="true"    
+                             requiredMessage="Falta o nome de usuário"   
+                             validator="#{utilizadorController.checkDoppel}"
+                             validatorMessage="Nome de usuário já registrado"/>
+                
+
+                <h:outputLabel value="Password:"
+                               for="password" />
+                <h:inputSecret id="password"
+                             value="#{utilizadorController.password}"
+                             required="true"    
+                             requiredMessage="Falta a senha"   
+                             />    
+            </h:panelGrid>
+            <h:messages layout="table"
+                        errorStyle="color:blue"
+
+                        />        
+            <br />
+            <h:commandButton value="Confirmar" action="#{utilizadorController.createNew}"></h:commandButton>
+
+        </h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+        Pedido sujeito à aprovação do administrador
+    </ui:define>
+
+</ui:composition>
+
