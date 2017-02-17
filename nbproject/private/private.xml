@@ -9,14 +9,9 @@
         </group>
         <group name="Java">
             <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/UtilizadorController.java</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/PedidoAdesao.xhtml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/menuVisitante.xhtml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/UtilizadorFacadeLocal.java</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/TUtilizador.java</file>
             <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/UtilizadorFacade.java</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/DAO.java</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB/nbproject/build-impl.xml</file>
             <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/TNewsletter.java</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/TCodigoNewsletter.java</file>
         </group>
     </open-files>
 </project-private>

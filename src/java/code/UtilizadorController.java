@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -29,6 +30,10 @@ public class UtilizadorController implements Serializable {
 
     @EJB
     private UtilizadorFacadeLocal uFacade;
+    @EJB
+    private NewsletterFacadeLocal nFacade;
+
+    final List<TUtilizador> usersOnline = new ArrayList<>();
 
     String username;
     String nome;
@@ -37,6 +42,16 @@ public class UtilizadorController implements Serializable {
     float saldo;
     boolean active;
     boolean connected;
+    final String PA = "Pedido de Adesao";
+    final String AA = "Adesao Aceita";
+    final String AN = "Adesao Negada";
+    final String CS = "Conta Suspensa";
+    final String CR = "Conta Reativada";
+    final String IA = "Item a Venda";
+    final String IV = "Item Vendido";
+    final String IO = "Item Ofertado";
+    final String IC = "Item Cancelado";
+    final String IE = "Item Expirado";
 
     public String getUsername() {
         return username;
@@ -98,9 +113,64 @@ public class UtilizadorController implements Serializable {
         uFacade.createNew(nome, morada, username, password);
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        //uFacade.addNewsLetter("Pedido de Adesão efetuado por " + nome + ", usuário " + username + " em " + dateFormat.format(date));
+        nFacade.addNewsLetter(PA, dateFormat.format(date), "Pedido de Adesão efetuado por " + nome);
 
         return "index";
+    }
+
+    public TUtilizador getUser() {
+        List<TUtilizador> l = getAll();
+        for (TUtilizador u : l) {
+            if (u.getUsername().equals(username)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public String login() {
+        FacesContext context = FacesContext.getCurrentInstance();
+//        Para o caso de se enviarem por parâmetros de forms
+//        Map params = context.getExternalContext().getRequestParameterMap();
+//        String user = (String) params.get("user");
+//        String pass = (String) params.get("pass");
+
+        TUtilizador u = getUser();
+
+        if ((u == null) || (u.getPassword().compareTo(password) != 0)) {
+            context.addMessage(null, new FacesMessage("Nome de usuário/senha inválidos"));
+            return null;
+        }
+        if (!u.getActivo()) {
+            context.addMessage(null, new FacesMessage("Conta aguardando parecer do Administrador"));
+            return null;
+        }
+        if (u.getConectado()) {
+            context.addMessage(null, new FacesMessage("Usuário já está conectado"));
+            return null;
+        }
+        if (u.getPassword().compareTo(password) != 0) {
+            return null;
+        }
+
+        u.setConectado(true);
+        usersOnline.add(u);
+
+        if (u.getUsername().compareTo("admin") == 0) {
+            return "menuAdmin";
+        }
+        return "menuCliente";
+    }
+
+    public void checkConnected(FacesContext fc, UIComponent uic, Object valor) throws ValidatorException {
+        TUtilizador u = getUser();
+        String texto = valor.toString();
+        if (u.getConectado()) {
+            FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Usuário já está conectado",
+                    "(" + texto + ")");
+            throw new ValidatorException(fmsg);
+        }
     }
 
     public void checkDoppel(FacesContext fc, UIComponent uic, Object valor) throws ValidatorException {
@@ -115,6 +185,15 @@ public class UtilizadorController implements Serializable {
 
     public List<TUtilizador> getAll() {
         return uFacade.getAll();
+    }
+
+    public boolean getUserOnline() {
+        for (TUtilizador u : usersOnline) {
+            if (u.getUsername().compareTo(username) != 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void validaUsername(FacesContext fc, UIComponent uic, Object valor) throws ValidatorException {

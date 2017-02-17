@@ -40,15 +40,15 @@
                              requiredMessage="Falta o nome de usuário"   
                              validator="#{utilizadorController.checkDoppel}"
                              validatorMessage="Nome de usuário já registrado"/>
-                
+
 
                 <h:outputLabel value="Password:"
                                for="password" />
                 <h:inputSecret id="password"
-                             value="#{utilizadorController.password}"
-                             required="true"    
-                             requiredMessage="Falta a senha"   
-                             />    
+                               value="#{utilizadorController.password}"
+                               required="true"    
+                               requiredMessage="Falta a senha"   
+                               />    
             </h:panelGrid>
             <h:messages layout="table"
                         errorStyle="color:blue"
@@ -56,7 +56,9 @@
                         />        
             <br />
             <h:commandButton value="Confirmar" action="#{utilizadorController.createNew}"></h:commandButton>
-
+            <h:form>                
+                <h:link value="Voltar" outcome="menuVisitante"></h:link>
+            </h:form>
         </h:form>
     </ui:define>
 

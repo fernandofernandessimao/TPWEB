@@ -15,10 +15,8 @@ import javax.ejb.Local;
 @Local
 public interface UtilizadorFacadeLocal {
 
-    List<TUtilizador> getAll();
+    List<TUtilizador> getAll();  
 
-    TUtilizador getUser();
-
-    void createNew(String username, String nome, String morada, String password);    
+    void createNew(String username, String nome, String morada, String password);
 
 }
