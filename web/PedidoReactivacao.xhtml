@@ -1,20 +1,47 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Pedido Reactivação</title>
-    </h:head>
-    <h:body>
-        <p>Pedido Reactivação</p>
-        <h:form>
-        Username:<br/>
-        <h:inputText id="username"></h:inputText><br/>
-        Password:<br/>
-        <h:inputSecret id="password"></h:inputSecret><br/><br/>
-        <h:commandButton value="Confirmar"></h:commandButton>
-        <h:commandLink value="Voltar" action="menuVisitante"/>
-        </h:form>
-    </h:body>
-</html>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./newTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="top">
+        Sistema de Leilão - Pedido de Reativação
+    </ui:define>
 
+    <ui:define name="content">
+
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Username"
+                               for="username" />
+                <h:inputText id="username"
+                             value="#{reativacaoController.username}"
+                             required="true"                             
+                             requiredMessage="Falta o nome de usuário" 
+                             />
+                <h:outputLabel value="Password:"
+                               for="password"/>
+                <h:inputSecret id="password"
+                               value="#{reativacaoController.password}"
+                               required="true"
+                               requiredMessage="Falta a senha"
+                               />                   
+            </h:panelGrid>
+            <h:messages                 
+                layout="table"
+                errorStyle="color:red"
+                />        
+            <br/>
+            <h:commandButton value="Confirmar" action="#{utilizadorController.reativacao()}"></h:commandButton>
+            <h:form>                
+                <h:link value="Voltar" outcome="menuVisitante"></h:link>
+            </h:form>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+        Plataformas de Desenvolvimento - 2016/2017
+    </ui:define>
+
+</ui:composition>

@@ -1,18 +1,83 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Processar Pedidos</title>
-    </h:head>
-    <h:body>
-        <p>Processar Pedidos</p>
-        <h:form>
-            //Informação do pedido a ser processado<br/>
-            <h:commandButton value="Aceitar"/>
-            <h:commandButton value="Rejeitar"/><br/><br/>
-            <h:commandLink value="Voltar" action="menuAdmnistrador"/>
-        </h:form>
-    </h:body>
-</html>
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./newTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <ui:define name="top">
+        Administrador - Gerir Pedidos de Adesão
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:dataTable value="#{adesaoController.all}"
+                     var="adesao"
+                     border="0"
+                     cellpadding="2"
+                     cellspacing="0"                     
+                     rules="all"
+                     style="border:solid 1px"
+                     >
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Nome"/>
+                </f:facet>
+                <h:outputText value="#{adesao.nome}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Morada"/>
+                </f:facet>
+                <h:outputText value="#{adesao.morada}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Username"/>
+                </f:facet>
+                <h:outputText value="#{adesao.username}"/>
+            </h:column>            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Password"/>
+                </f:facet>
+                <h:outputText value="#{adesao.password}"/>
+            </h:column>            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Pendente"/>
+                </f:facet>
+                <h:outputText value="#{adesao.pendente}"/>
+            </h:column>            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Aceite"/>
+                </f:facet>
+                <h:outputText value="#{adesao.aceite}"/>
+            </h:column>            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Data"/>
+                </f:facet>
+                <h:outputText value="#{adesao.dataProc}"/>
+            </h:column>            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Razao"/>
+                </f:facet>
+                <h:outputText value="#{adesao.razaoRej}"/>
+            </h:column>            
+        </h:dataTable>
+        <h:form>
+            <br></br>
+            <h:link value="Voltar" outcome="menuAdmin"></h:link>
+        </h:form>
+
+    </ui:define>
+
+    <ui:define name="bottom">
+        Plataformas de Desenvolvimento - 2016/2017
+    </ui:define>
+
+</ui:composition>

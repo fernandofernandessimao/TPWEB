@@ -15,8 +15,18 @@ import javax.ejb.Local;
 @Local
 public interface UtilizadorFacadeLocal {
 
-    List<TUtilizador> getAll();  
+    List<TUtilizador> getAll();
 
     void createNew(String username, String nome, String morada, String password);
 
+    void changeName(TUtilizador user, String nome);
+    
+    void changeAdress(TUtilizador user, String address);
+    
+    void changePassword(TUtilizador user, String password);
+    
+    void increaseBalance(TUtilizador user, float valor);
+    
+    void suspensionRequest(TUtilizador user, String reason);
+    
 }

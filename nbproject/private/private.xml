@@ -9,9 +9,17 @@
         </group>
         <group name="Java">
             <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/UtilizadorController.java</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/UtilizadorFacade.java</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/AdesaoController.java</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/AdesaoFacade.java</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/PedidoAdesao.xhtml</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/PorItemVenda.xhtml</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/menuVisitante.xhtml</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/PedidoSuspensao.xhtml</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/menuCliente.xhtml</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/ReativacaoController.java</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/PedidoReactivacao.xhtml</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/ProcessarPedidos.xhtml</file>
             <file>file:/C:/Users/Fernando/Downloads/TPWEB/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/TNewsletter.java</file>
         </group>
     </open-files>
 </project-private>

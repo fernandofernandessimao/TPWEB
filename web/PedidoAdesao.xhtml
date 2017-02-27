@@ -21,7 +21,6 @@
                              value="#{utilizadorController.nome}"
                              required="true"                             
                              requiredMessage="Falta o nome"
-
                              />
 
                 <h:outputLabel value="Morada:"
@@ -41,7 +40,6 @@
                              validator="#{utilizadorController.checkDoppel}"
                              validatorMessage="Nome de usuário já registrado"/>
 
-
                 <h:outputLabel value="Password:"
                                for="password" />
                 <h:inputSecret id="password"
@@ -51,11 +49,12 @@
                                />    
             </h:panelGrid>
             <h:messages layout="table"
-                        errorStyle="color:blue"
+                        errorStyle="color:red"
 
                         />        
-            <br />
-            <h:commandButton value="Confirmar" action="#{utilizadorController.createNew}"></h:commandButton>
+            <br/>
+            <h:commandButton value="Confirmar" action="#{utilizadorController.addPedidoAdesao()}"></h:commandButton>
+            <br/>
             <h:form>                
                 <h:link value="Voltar" outcome="menuVisitante"></h:link>
             </h:form>

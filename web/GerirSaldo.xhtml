@@ -1,19 +1,44 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Gerir Saldo</title>
-    </h:head>
-    <h:body>
-        <p>Gerir Saldo</p>
-        <p>Saldo Atual: </p>
-        <h:form>
-            Adicionar Saldo<br/>
-            <h:inputText id="saldoAcresentar"></h:inputText>
-            <h:commandButton value="Adicionar"></h:commandButton><br/>
-            <h:commandLink value="Sair" action="menuCliente"></h:commandLink>
-        </h:form>
-    </h:body>
-</html>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./newTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="top">
+        Gerir Conta - Aumentar Saldo
+    </ui:define>
 
+    <ui:define name="content">
+
+        <h:form>
+            <h:panelGrid id="teste" columns="2">                
+                <h:outputText value="Saldo Atual: "/>
+                <h:outputText value="#{utilizadorController.saldo}"/>                                 
+                <h:outputLabel value="Valor:"
+                               for="valor"/>
+                <h:inputText id="valor"
+                             value="#{utilizadorController.valor}"
+                             required="true"
+                             requiredMessage="Falta o valor"                               
+                             validator="#{utilizadorController.validaSaldo}">
+                </h:inputText>
+            </h:panelGrid>
+            <h:messages 
+                for="valor"
+                layout="table"
+                errorStyle="color:red"
+                />        
+            <br/>
+            <h:commandButton value="Confirmar" action="#{utilizadorController.increaseBalance()}"></h:commandButton>
+            <h:form>                
+                <h:link value="Voltar" outcome="menuCliente"></h:link>
+            </h:form>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+        Plataformas de Desenvolvimento - 2016/2017
+    </ui:define>
+
+</ui:composition>
