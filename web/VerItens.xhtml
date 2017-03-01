@@ -1,12 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Ver Itens</title>
-    </h:head>
-    <h:body>
-        <p>Ver Itens</p>
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./newTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="top">
+        Sistema de Leilão - Ver Itens
+    </ui:define>
+
+    <ui:define name="content">
         <h:form>
             <h:commandButton value="Listar por Categoria"></h:commandButton><br/><br/>
             <h:commandButton value="Listar por Descrição"></h:commandButton><br/><br/>
@@ -15,6 +18,11 @@
             //MeterTabele com os itens e ordernar pelo botão pressionado
             <h:commandLink value="Voltar" action="menuCliente"/>
         </h:form>
-    </h:body>
-</html>
+    </ui:define>
+
+    <ui:define name="bottom">
+        Plataformas de Desenvolvimento - 2016/2017
+    </ui:define>
+
+</ui:composition>
 
