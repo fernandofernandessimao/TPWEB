@@ -6,13 +6,15 @@
                 xmlns="http://www.w3.org/1999/xhtml">
 
     <ui:define name="top">
-        Sistema de Leilão - Ver Denuncias
+        Sistema de Leilão - Adicionar Categoria
     </ui:define>
 
     <ui:define name="content">
-        <p></p>
         <h:form>
-            <h:commandLink value="Voltar" action="menuAdmnistrador"/>
+            Nova Categoria:<br/>
+            <h:inputText id="nova"/><br/><br/>
+            <h:commandButton value="Confirmar"/>
+            <h:commandLink value="Voltar" action="menuAdmin"/>
         </h:form>
     </ui:define>
 

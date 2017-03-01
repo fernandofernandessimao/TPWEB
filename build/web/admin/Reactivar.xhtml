@@ -6,14 +6,15 @@
                 xmlns="http://www.w3.org/1999/xhtml">
 
     <ui:define name="top">
-        Sistema de Leilão - Adicionar Categoria
+        Sistema de Leilão - Reactivar
     </ui:define>
 
     <ui:define name="content">
         <h:form>
-            Nova Categoria:<br/>
-            <h:inputText id="nova"/><br/><br/>
-            <h:commandButton value="Confirmar"/>
+        Username da conta:<br/>
+        <h:inputText id="username"></h:inputText><br/><br/>
+        <h:commandButton value="Confirmar"></h:commandButton>
+        <h:commandLink value="Voltar" action="menuAdmin"/>
         </h:form>
     </ui:define>
 

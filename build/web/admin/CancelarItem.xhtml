@@ -6,14 +6,18 @@
                 xmlns="http://www.w3.org/1999/xhtml">
 
     <ui:define name="top">
-        Sistema de Leilão - Reactivar
+        Sistema de Leilão - Cancelar Item
     </ui:define>
 
     <ui:define name="content">
+        <p>Cancelar Item</p>
         <h:form>
-        Username da conta:<br/>
-        <h:inputText id="username"></h:inputText><br/><br/>
-        <h:commandButton value="Confirmar"></h:commandButton>
+        Id do Item:<br/>
+        <h:inputText id="idItem"></h:inputText><br/>
+        Razão:<br/>
+        <h:inputTextarea id="razao"></h:inputTextarea><br/><br/>
+        <h:commandLink value="Confirmar"/>
+        <h:commandLink value="Voltar" action="menuAdmin"/>
         </h:form>
     </ui:define>
 
