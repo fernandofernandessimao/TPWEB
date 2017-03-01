@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -24,18 +26,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author João
+ * @author Fernando
  */
 @Entity
-@Table(name = "t_newsletter")
+@Table(name = "t_cancelamento")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TNewsletter.findAll", query = "SELECT t FROM TNewsletter t")
-    , @NamedQuery(name = "TNewsletter.findById", query = "SELECT t FROM TNewsletter t WHERE t.id = :id")
-    , @NamedQuery(name = "TNewsletter.findByTipo", query = "SELECT t FROM TNewsletter t WHERE t.tipo = :tipo")
-    , @NamedQuery(name = "TNewsletter.findByData", query = "SELECT t FROM TNewsletter t WHERE t.data = :data")
-    , @NamedQuery(name = "TNewsletter.findByMensagem", query = "SELECT t FROM TNewsletter t WHERE t.mensagem = :mensagem")})
-public class TNewsletter implements Serializable {
+    @NamedQuery(name = "TCancelamento.findAll", query = "SELECT t FROM TCancelamento t"),
+    @NamedQuery(name = "TCancelamento.findById", query = "SELECT t FROM TCancelamento t WHERE t.id = :id"),
+    @NamedQuery(name = "TCancelamento.findByRazao", query = "SELECT t FROM TCancelamento t WHERE t.razao = :razao"),
+    @NamedQuery(name = "TCancelamento.findByDataCanc", query = "SELECT t FROM TCancelamento t WHERE t.dataCanc = :dataCanc")})
+public class TCancelamento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,32 +46,29 @@ public class TNewsletter implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "tipo")
-    private String tipo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "data")
-    @Temporal(TemporalType.DATE)
-    private Date data;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 200)
-    @Column(name = "mensagem")
-    private String mensagem;
+    @Column(name = "razao")
+    private String razao;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "data_canc")
+    @Temporal(TemporalType.DATE)
+    private Date dataCanc;
+    @JoinColumn(name = "itemid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private TItem itemid;
 
-    public TNewsletter() {
+    public TCancelamento() {
     }
 
-    public TNewsletter(Integer id) {
+    public TCancelamento(Integer id) {
         this.id = id;
     }
 
-    public TNewsletter(Integer id, String tipo, Date data, String mensagem) {
+    public TCancelamento(Integer id, String razao, Date dataCanc) {
         this.id = id;
-        this.tipo = tipo;
-        this.data = data;
-        this.mensagem = mensagem;
+        this.razao = razao;
+        this.dataCanc = dataCanc;
     }
 
     public Integer getId() {
@@ -81,28 +79,28 @@ public class TNewsletter implements Serializable {
         this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getRazao() {
+        return razao;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setRazao(String razao) {
+        this.razao = razao;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDataCanc() {
+        return dataCanc;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDataCanc(Date dataCanc) {
+        this.dataCanc = dataCanc;
     }
 
-    public String getMensagem() {
-        return mensagem;
+    public TItem getItemid() {
+        return itemid;
     }
 
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
+    public void setItemid(TItem itemid) {
+        this.itemid = itemid;
     }
 
     @Override
@@ -115,10 +113,10 @@ public class TNewsletter implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TNewsletter)) {
+        if (!(object instanceof TCancelamento)) {
             return false;
         }
-        TNewsletter other = (TNewsletter) object;
+        TCancelamento other = (TCancelamento) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -127,7 +125,7 @@ public class TNewsletter implements Serializable {
 
     @Override
     public String toString() {
-        return "code.TNewsletter[ id=" + id + " ]";
+        return "local.TCancelamento[ id=" + id + " ]";
     }
     
 }
