@@ -4,9 +4,6 @@ import code.util.JsfUtil;
 import code.util.PaginationHelper;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -19,52 +16,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("tAdesaoController")
+@Named("tUtilizadorController")
 @SessionScoped
-public class TAdesaoController implements Serializable {
+public class TUtilizadorController implements Serializable {
 
-    private TAdesao current;
+    private TUtilizador current;
     private DataModel items = null;
     @EJB
-    private code.TAdesaoFacade ejbFacade;
-    @EJB
-    private NewsletterFacadeLocal nFacade;
-    @EJB
-    private UtilizadorFacadeLocal uFacade;
-
+    private code.TUtilizadorFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    boolean pendente;
-    boolean aceite;
 
-    public boolean isPendente() {
-        return pendente;
+    public TUtilizadorController() {
     }
 
-    public void setPendente(boolean pendente) {
-        this.pendente = pendente;
-    }
-
-    public boolean isAceite() {
-        return aceite;
-    }
-
-    public void setAceite(boolean aceite) {
-        this.aceite = aceite;
-    }
-
-    public TAdesaoController() {
-    }
-
-    public TAdesao getSelected() {
+    public TUtilizador getSelected() {
         if (current == null) {
-            current = new TAdesao();
+            current = new TUtilizador();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private TAdesaoFacade getFacade() {
+    private TUtilizadorFacade getFacade() {
         return ejbFacade;
     }
 
@@ -91,31 +65,74 @@ public class TAdesaoController implements Serializable {
         return "List";
     }
 
-    public String prepareEdit() {
-        current = (TAdesao) getItems().getRowData();
+    public String prepareView() {
+        current = (TUtilizador) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "EditarAdesao";
+        return "View";
+    }
+
+    public String prepareCreate() {
+        current = new TUtilizador();
+        selectedItemIndex = -1;
+        return "Create";
+    }
+
+    public String create() {
+        try {
+            getFacade().create(current);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/suspensao").getString("TUtilizadorCreated"));
+            return prepareCreate();
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/suspensao").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
+
+    public String prepareEdit() {
+        current = (TUtilizador) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        return "Edit";
     }
 
     public String update() {
         try {
-            Date date = new Date();
-            current.setDataProc(date);
-
-            if (!current.getPendente() && current.getAceite()) {
-                nFacade.addNewsLetter("Adesão Aceita", date, "Pedido de Adesão efetuado por " + current.getUsername() + "aceito.");
-                uFacade.createNew(current.getUsername(), current.getNome(), current.getMorada(), current.getPassword());
-            } else {
-                nFacade.addNewsLetter("Adesão Negada", date, "Pedido de Adesão efetuado por " + current.getUsername() + " recusado. Motivo: " + current.getRazaoRej());
-            }
-
             getFacade().edit(current);
-
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TAdesaoUpdated"));
-            return "ListarAdesao";
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/suspensao").getString("TUtilizadorUpdated"));
+            return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/suspensao").getString("PersistenceErrorOccured"));
             return null;
+        }
+    }
+
+    public String destroy() {
+        current = (TUtilizador) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        performDestroy();
+        recreatePagination();
+        recreateModel();
+        return "List";
+    }
+
+    public String destroyAndView() {
+        performDestroy();
+        recreateModel();
+        updateCurrentItem();
+        if (selectedItemIndex >= 0) {
+            return "View";
+        } else {
+            // all items were removed - go back to list
+            recreateModel();
+            return "List";
+        }
+    }
+
+    private void performDestroy() {
+        try {
+            getFacade().remove(current);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/suspensao").getString("TUtilizadorDeleted"));
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/suspensao").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -169,30 +186,30 @@ public class TAdesaoController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public TAdesao getTAdesao(java.lang.Integer id) {
+    public TUtilizador getTUtilizador(java.lang.String id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = TAdesao.class)
-    public static class TAdesaoControllerConverter implements Converter {
+    @FacesConverter(forClass = TUtilizador.class)
+    public static class TUtilizadorControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            TAdesaoController controller = (TAdesaoController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "tAdesaoController");
-            return controller.getTAdesao(getKey(value));
+            TUtilizadorController controller = (TUtilizadorController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "tUtilizadorController");
+            return controller.getTUtilizador(getKey(value));
         }
 
-        java.lang.Integer getKey(String value) {
-            java.lang.Integer key;
-            key = Integer.valueOf(value);
+        java.lang.String getKey(String value) {
+            java.lang.String key;
+            key = value;
             return key;
         }
 
-        String getStringKey(java.lang.Integer value) {
+        String getStringKey(java.lang.String value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -203,11 +220,11 @@ public class TAdesaoController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof TAdesao) {
-                TAdesao o = (TAdesao) object;
-                return getStringKey(o.getId());
+            if (object instanceof TUtilizador) {
+                TUtilizador o = (TUtilizador) object;
+                return getStringKey(o.getUsername());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + TAdesao.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + TUtilizador.class.getName());
             }
         }
 

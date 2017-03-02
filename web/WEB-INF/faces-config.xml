@@ -12,5 +12,9 @@
             <base-name>/categoria</base-name>
             <var>categoria</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/suspensao</base-name>
+            <var>suspensao</var>
+        </resource-bundle>
     </application>
 </faces-config>

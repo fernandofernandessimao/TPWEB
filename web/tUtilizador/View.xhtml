@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{suspensao.ViewTUtilizadorTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{suspensao.ViewTUtilizadorLabel_nome}"/>
+                    <h:outputText value="#{tUtilizadorController.selected.nome}" title="#{suspensao.ViewTUtilizadorTitle_nome}"/>
+                    <h:outputText value="#{suspensao.ViewTUtilizadorLabel_morada}"/>
+                    <h:outputText value="#{tUtilizadorController.selected.morada}" title="#{suspensao.ViewTUtilizadorTitle_morada}"/>
+                    <h:outputText value="#{suspensao.ViewTUtilizadorLabel_username}"/>
+                    <h:outputText value="#{tUtilizadorController.selected.username}" title="#{suspensao.ViewTUtilizadorTitle_username}"/>
+                    <h:outputText value="#{suspensao.ViewTUtilizadorLabel_password}"/>
+                    <h:outputText value="#{tUtilizadorController.selected.password}" title="#{suspensao.ViewTUtilizadorTitle_password}"/>
+                    <h:outputText value="#{suspensao.ViewTUtilizadorLabel_saldo}"/>
+                    <h:outputText value="#{tUtilizadorController.selected.saldo}" title="#{suspensao.ViewTUtilizadorTitle_saldo}"/>
+                    <h:outputText value="#{suspensao.ViewTUtilizadorLabel_activo}"/>
+                    <h:outputText value="#{tUtilizadorController.selected.activo}" title="#{suspensao.ViewTUtilizadorTitle_activo}"/>
+                    <h:outputText value="#{suspensao.ViewTUtilizadorLabel_conectado}"/>
+                    <h:outputText value="#{tUtilizadorController.selected.conectado}" title="#{suspensao.ViewTUtilizadorTitle_conectado}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{tUtilizadorController.destroyAndView}" value="#{suspensao.ViewTUtilizadorDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{suspensao.ViewTUtilizadorEditLink}"/>
+                <br />
+                <h:commandLink action="#{tUtilizadorController.prepareCreate}" value="#{suspensao.ViewTUtilizadorCreateLink}" />
+                <br />
+                <h:commandLink action="#{tUtilizadorController.prepareList}" value="#{suspensao.ViewTUtilizadorShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{suspensao.ViewTUtilizadorIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -189,7 +189,7 @@ public class UtilizadorController implements Serializable {
             return null;
         }
         sFacade.addSuspension(u, razao);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        
         Date date = new Date();
         nFacade.addNewsLetter(PS, date, "Pedido de Suspensão efetuado por " + u.getNome());
         return "menuCliente";
@@ -264,8 +264,7 @@ public class UtilizadorController implements Serializable {
             context.addMessage(null, new FacesMessage("A conta ainda não foi aprovada pelo administrador."));
             return null;
         }
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        
         Date date = new Date();
         nFacade.addNewsLetter(PR, date, "Pedido de Reativação efetuado por " + username);
 
@@ -288,7 +287,7 @@ public class UtilizadorController implements Serializable {
             return null;
         }
         if (!u.getActivo()) {
-            context.addMessage(null, new FacesMessage("Conta aguardando parecer do Administrador"));
+            context.addMessage(null, new FacesMessage("Conta suspensa."));
             return null;
         }
 //        if (checkConnected()) {

@@ -58,7 +58,7 @@ public class TSuspensao implements Serializable {
     private boolean pendente;
     @Column(name = "aceite")
     private Boolean aceite;
-    @Column(name = "data_proc")
+    @Column(name = "data")
     @Temporal(TemporalType.DATE)
     private Date dataProc;
     @Size(max = 200)

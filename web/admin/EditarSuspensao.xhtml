@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/newTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="top">
+        Administrador - Editar Suspensão
+    </ui:define>
+    <ui:define name="content">
+        <h:form>
+            <h:panelGrid columns="2">                
+                <h:outputLabel value="#{suspensao.EditTSuspensaoLabel_razao}" for="razao" />
+                <h:inputText readonly="true" id="razao" value="#{tSuspensaoController.selected.razao}" title="#{suspensao.EditTSuspensaoTitle_razao}" required="true" requiredMessage="#{suspensao.EditTSuspensaoRequiredMessage_razao}"/>
+
+                <h:outputLabel value="#{suspensao.EditTSuspensaoLabel_pendente}" for="pendente" />
+                <h:selectOneMenu value="#{tSuspensaoController.selected.pendente}">
+                    <f:selectItem itemValue="true" itemLabel="true" />
+                    <f:selectItem itemValue="false" itemLabel="false" />	   							
+                </h:selectOneMenu>
+
+                <h:outputLabel value="#{suspensao.EditTSuspensaoLabel_aceite}" for="aceite" />
+                <h:selectOneMenu value="#{tSuspensaoController.selected.aceite}">
+                    <f:selectItem itemValue="true" itemLabel="true" />
+                    <f:selectItem itemValue="false" itemLabel="false" />	   							
+                </h:selectOneMenu>                
+                <h:panelGroup rendered="#{tSuspensaoController.selected.dataProc != null}">
+                    <h:outputLabel value="#{suspensao.EditTSuspensaoLabel_dataProc}" for="dataProc" />
+                    <h:inputText readonly="true" id="dataProc" value="#{tSuspensaoController.selected.dataProc}" title="#{suspensao.EditTSuspensaoTitle_dataProc}" >
+                        <f:convertDateTime pattern="yyyy/MM/dd" />
+                    </h:inputText>
+                </h:panelGroup>
+                <h:outputLabel value="#{suspensao.EditTSuspensaoLabel_razaoRej}" for="razaoRej" />
+                <h:inputText id="razaoRej" value="#{tSuspensaoController.selected.razaoRej}" title="#{suspensao.EditTSuspensaoTitle_razaoRej}" />                
+            </h:panelGrid>
+            <h:commandLink action="#{tSuspensaoController.update}" value="Confirmar"/>                     
+            <br />
+            <h:link outcome="ListarSuspensao" value="Voltar" />
+        </h:form>
+    </ui:define>
+    <ui:define name="bottom">
+        Plataformas de Desenvolvimento - 2016/2017
+    </ui:define>
+</ui:composition>

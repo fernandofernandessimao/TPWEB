@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{suspensao.CreateTUtilizadorTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{suspensao.CreateTUtilizadorLabel_nome}" for="nome" />
+                    <h:inputText id="nome" value="#{tUtilizadorController.selected.nome}" title="#{suspensao.CreateTUtilizadorTitle_nome}" required="true" requiredMessage="#{suspensao.CreateTUtilizadorRequiredMessage_nome}"/>
+                    <h:outputLabel value="#{suspensao.CreateTUtilizadorLabel_morada}" for="morada" />
+                    <h:inputText id="morada" value="#{tUtilizadorController.selected.morada}" title="#{suspensao.CreateTUtilizadorTitle_morada}" required="true" requiredMessage="#{suspensao.CreateTUtilizadorRequiredMessage_morada}"/>
+                    <h:outputLabel value="#{suspensao.CreateTUtilizadorLabel_username}" for="username" />
+                    <h:inputText id="username" value="#{tUtilizadorController.selected.username}" title="#{suspensao.CreateTUtilizadorTitle_username}" required="true" requiredMessage="#{suspensao.CreateTUtilizadorRequiredMessage_username}"/>
+                    <h:outputLabel value="#{suspensao.CreateTUtilizadorLabel_password}" for="password" />
+                    <h:inputText id="password" value="#{tUtilizadorController.selected.password}" title="#{suspensao.CreateTUtilizadorTitle_password}" required="true" requiredMessage="#{suspensao.CreateTUtilizadorRequiredMessage_password}"/>
+                    <h:outputLabel value="#{suspensao.CreateTUtilizadorLabel_saldo}" for="saldo" />
+                    <h:inputText id="saldo" value="#{tUtilizadorController.selected.saldo}" title="#{suspensao.CreateTUtilizadorTitle_saldo}" required="true" requiredMessage="#{suspensao.CreateTUtilizadorRequiredMessage_saldo}"/>
+                    <h:outputLabel value="#{suspensao.CreateTUtilizadorLabel_activo}" for="activo" />
+                    <h:inputText id="activo" value="#{tUtilizadorController.selected.activo}" title="#{suspensao.CreateTUtilizadorTitle_activo}" required="true" requiredMessage="#{suspensao.CreateTUtilizadorRequiredMessage_activo}"/>
+                    <h:outputLabel value="#{suspensao.CreateTUtilizadorLabel_conectado}" for="conectado" />
+                    <h:inputText id="conectado" value="#{tUtilizadorController.selected.conectado}" title="#{suspensao.CreateTUtilizadorTitle_conectado}" required="true" requiredMessage="#{suspensao.CreateTUtilizadorRequiredMessage_conectado}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{tUtilizadorController.create}" value="#{suspensao.CreateTUtilizadorSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{tUtilizadorController.prepareList}" value="#{suspensao.CreateTUtilizadorShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{suspensao.CreateTUtilizadorIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

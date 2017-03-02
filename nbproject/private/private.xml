@@ -7,26 +7,18 @@
             <file>file:/home/joao1bizarro/NetBeansProjects/TPWEB/web/DadosItem.xhtml</file>
             <file>file:/home/joao1bizarro/NetBeansProjects/TPWEB/web/menuAdmnistrador.xhtml</file>
         </group>
-        <group name="Java">
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/UtilizadorController.java</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/AdesaoController.java</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/AdesaoFacade.java</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/PedidoAdesao.xhtml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/PorItemVenda.xhtml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/menuVisitante.xhtml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/PedidoSuspensao.xhtml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/menuCliente.xhtml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/src/java/code/ReativacaoController.java</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/PedidoReactivacao.xhtml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/ProcessarPedidos.xhtml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB/nbproject/build-impl.xml</file>
-        </group>
         <group name="TP1617">
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/admin/ListarAdesao.xhtml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/admin/EditarAdesao.xhtml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/java/code/TAdesaoController.java</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/admin/EditarCategoria.xhtml</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/WEB-INF/glassfish-resources.xml</file>
             <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/java/code/UtilizadorController.java</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/conf/persistence.xml</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/WEB-INF/faces-config.xml</file>
+        </group>
+        <group name="Java">
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/java/code/UtilizadorController.java</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/java/code/ReativacaoFacadeLocal.java</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/admin/ListarSuspensao.xhtml</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/java/code/ReativacaoFacade.java</file>
         </group>
     </open-files>
 </project-private>
