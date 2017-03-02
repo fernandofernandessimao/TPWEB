@@ -47,7 +47,7 @@ public class UtilizadorController implements Serializable {
     String errorMsg;
     String nome;
     String morada;
-    String password;
+    String password, newPassword = null, oldPassword = null;
     String razao;
     float saldo, thisSaldo;
     float valor;
@@ -67,7 +67,23 @@ public class UtilizadorController implements Serializable {
     final String IE = "Item Expirado";
 
     DataModel listAdesao;
-    
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -175,7 +191,7 @@ public class UtilizadorController implements Serializable {
         sFacade.addSuspension(u, razao);
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        nFacade.addNewsLetter(PS, dateFormat.format(date), "Pedido de Suspensão efetuado por " + u.getNome());
+        nFacade.addNewsLetter(PS, date, "Pedido de Suspensão efetuado por " + u.getNome());
         return "menuCliente";
     }
 
@@ -192,7 +208,7 @@ public class UtilizadorController implements Serializable {
         aFacade.addPedidoAdesao(nome, morada, username, password);
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        nFacade.addNewsLetter(PA, dateFormat.format(date), "Pedido de Adesão efetuado por " + nome);
+        nFacade.addNewsLetter(PA, date, "Pedido de Adesão efetuado por " + nome);
         return "menuVisitante";
     }
 
@@ -219,9 +235,11 @@ public class UtilizadorController implements Serializable {
         return "GerirCliente";
     }
 
-    public String changePassword() {
-        uFacade.changePassword(getUser(), password);
-        return "GerirCliente";
+    public void changePassword() {
+        uFacade.changePassword(getUser(), newPassword);
+        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Password alterada com sucesso", "Password alterada com sucesso");
+        FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
+        //return getUser().getUsername().equals("admin") ? "menuAdmin" : "GerirCliente";
     }
 
     public String increaseBalance() {
@@ -249,7 +267,7 @@ public class UtilizadorController implements Serializable {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        nFacade.addNewsLetter(PR, dateFormat.format(date), "Pedido de Reativação efetuado por " + username);
+        nFacade.addNewsLetter(PR, date, "Pedido de Reativação efetuado por " + username);
 
         rFacade.addReativacao(u);
 
@@ -273,10 +291,10 @@ public class UtilizadorController implements Serializable {
             context.addMessage(null, new FacesMessage("Conta aguardando parecer do Administrador"));
             return null;
         }
-        if (checkConnected()) {
-            context.addMessage(null, new FacesMessage("Usuário já está conectado"));
-            return null;
-        }
+//        if (checkConnected()) {
+//            context.addMessage(null, new FacesMessage("Usuário já está conectado"));
+//            return null;
+//        }
         if (u.getPassword().compareTo(password) != 0) {
             return null;
         }
@@ -284,14 +302,14 @@ public class UtilizadorController implements Serializable {
         u.setConectado(true);
 
         //saldo = u.getSaldo();
-        usersOnline.add(u.getUsername());
+       // usersOnline.add(u.getUsername());
 
-        // resetFields();
+       // resetFields();
         if (u.getUsername().compareTo("admin") == 0) {
-            return "menuAdmin";
+            return "/admin/menuAdmin";
         }
 
-        return "menuCliente";
+        return "/user/menuCliente";
     }
 
     public void resetFields() {
@@ -406,10 +424,10 @@ public class UtilizadorController implements Serializable {
 
     public void checkPassword(FacesContext fc, UIComponent uic, Object valor) throws ValidatorException {
         String texto = valor.toString();
-        if (texto.compareTo(getUser().getPassword()) != 0) {
+        if (!texto.equals(getUser().getPassword())) {
             FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Senha inválida",
-                    "(" + texto + ")");
+                    "Senha inválida");
             throw new ValidatorException(fmsg);
         }
 //        if ((texto.length() < 1)) {

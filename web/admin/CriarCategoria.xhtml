@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/newTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="top">
+        Administrador - Criar Categoria
+    </ui:define>   
+    <ui:define name="content">
+        <h:panelGroup id="messagePanel" layout="block">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+        </h:panelGroup>
+        <h:form>
+            <h:panelGrid columns="2">              
+                <h:outputLabel value="#{categoria.CreateTCategoriaLabel_nome}" for="nome" />
+                <h:inputText maxlength="30" id="nome" value="#{tCategoriaController.selected.nome}" title="#{categoria.CreateTCategoriaTitle_nome}" required="true" requiredMessage="Preencha o nome da categoria"/>
+            </h:panelGrid>
+            <br />
+            <h:commandLink action="#{tCategoriaController.create}" value="Confirmar" />                        
+            <br />
+            <h:commandLink action="ListarCategoria" value="Voltar"/>
+        </h:form>
+    </ui:define>
+    <ui:define name="bottom">
+        Plataformas de Desenvolvimento - 2016/2017
+    </ui:define>
+
+</ui:composition>
+

@@ -3,10 +3,16 @@
   <persistence-unit name="TPWEBPU" transaction-type="JTA">
     <jta-data-source>java:app/tp</jta-data-source>
     <class>code.TNewsletter</class>
-    <class>code.TCodigoNewsletter</class>
     <class>code.TUtilizador</class>
     <class>code.TSuspensao</class>
     <class>code.TAdesao</class>
+    <class>code.TCancelamento</class>
+    <class>code.TCategoria</class>
+    <class>code.TDenunciaItem</class>
+    <class>code.TDenunciaUtilizador</class>
+    <class>code.TItem</class>
+    <class>code.TMensagem</class>
+    <class>code.TReactivacao</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

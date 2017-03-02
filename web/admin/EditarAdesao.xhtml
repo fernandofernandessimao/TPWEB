@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/newTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="top">
+        Administrador - Gerir Pedido de Adesão
+    </ui:define>
+    <ui:define name="content">
+        <h:panelGroup id="messagePanel" layout="block">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+        </h:panelGroup>
+        <h:form>
+            <h:panelGrid columns="2">                   
+                <h:outputLabel value="#{bundle.EditTAdesaoLabel_nome}" for="nome" />
+                <h:inputText readonly="true" id="nome" value="#{tAdesaoController.selected.nome}" title="#{bundle.EditTAdesaoTitle_nome}" required="true" requiredMessage="#{bundle.EditTAdesaoRequiredMessage_nome}"/>
+                <h:outputLabel value="#{bundle.EditTAdesaoLabel_morada}" for="morada" />
+                <h:inputText readonly="true" id="morada" value="#{tAdesaoController.selected.morada}" title="#{bundle.EditTAdesaoTitle_morada}" required="true" requiredMessage="#{bundle.EditTAdesaoRequiredMessage_morada}"/>
+                <h:outputLabel value="#{bundle.EditTAdesaoLabel_username}" for="username" />
+                <h:inputText readonly="true" id="username" value="#{tAdesaoController.selected.username}" title="#{bundle.EditTAdesaoTitle_username}" required="true" requiredMessage="#{bundle.EditTAdesaoRequiredMessage_username}"/>
+                <h:outputLabel value="#{bundle.EditTAdesaoLabel_password}" for="password" />
+                <h:inputText readonly="true" id="password" value="#{tAdesaoController.selected.password}" title="#{bundle.EditTAdesaoTitle_password}" required="true" requiredMessage="#{bundle.EditTAdesaoRequiredMessage_password}"/>
+
+                <h:outputLabel value="#{bundle.EditTAdesaoLabel_pendente}" for="pendente" />
+                <h:selectOneMenu value="#{tAdesaoController.selected.pendente}">
+                    <f:selectItem itemValue="true" itemLabel="true" />
+                    <f:selectItem itemValue="false" itemLabel="false" />	   							
+                </h:selectOneMenu>
+                <h:outputLabel value="#{bundle.EditTAdesaoLabel_aceite}" for="aceite" />
+                <h:selectOneMenu value="#{tAdesaoController.selected.aceite}" >
+                    <f:selectItem itemValue="true" itemLabel="true" />
+                    <f:selectItem itemValue="false" itemLabel="false" />	   							
+                </h:selectOneMenu>
+
+                <h:outputLabel value="Motivo de recusa" for="razaoRej" />
+                <h:inputText id="razaoRej" value="#{tAdesaoController.selected.razaoRej}" title="#{bundle.EditTAdesaoTitle_razaoRej}" />
+            </h:panelGrid>
+            <br />
+            <h:commandLink action="#{tAdesaoController.update}" value="Confirmar"/>
+            <br />
+            <h:commandLink action="ListarAdesao" value="Voltar"/>
+        </h:form>
+    </ui:define>
+    <ui:define name="bottom">
+        Plataformas de Desenvolvimento - 2016/2017
+    </ui:define>
+
+</ui:composition>

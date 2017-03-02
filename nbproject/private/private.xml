@@ -21,5 +21,12 @@
             <file>file:/C:/Users/Fernando/Downloads/TPWEB/web/ProcessarPedidos.xhtml</file>
             <file>file:/C:/Users/Fernando/Downloads/TPWEB/nbproject/build-impl.xml</file>
         </group>
+        <group name="TP1617">
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/admin/ListarAdesao.xhtml</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/admin/EditarAdesao.xhtml</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/java/code/TAdesaoController.java</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/admin/EditarCategoria.xhtml</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/java/code/UtilizadorController.java</file>
+        </group>
     </open-files>
 </project-private>

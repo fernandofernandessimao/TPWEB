@@ -29,6 +29,9 @@ public class UtilizadorFacade implements UtilizadorFacadeLocal {
     @Override
     public void createNew(String nome, String morada, String username, String password) {
         TUtilizador u = new TUtilizador(username, nome, morada, password);
+        u.setActivo(true);
+        u.setConectado(true);
+        u.setSaldo(500);        
         dao.getEntityManager().persist(u);
     }
 

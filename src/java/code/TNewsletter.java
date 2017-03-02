@@ -66,8 +66,8 @@ public class TNewsletter implements Serializable {
         this.id = id;
     }
 
-    public TNewsletter(Integer id, String tipo, Date data, String mensagem) {
-        this.id = id;
+    public TNewsletter(String tipo, Date data, String mensagem) {
+
         this.tipo = tipo;
         this.data = data;
         this.mensagem = mensagem;
@@ -129,5 +129,5 @@ public class TNewsletter implements Serializable {
     public String toString() {
         return "code.TNewsletter[ id=" + id + " ]";
     }
-    
+
 }
