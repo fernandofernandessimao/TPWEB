@@ -8,18 +8,11 @@
                 >
 
     <ui:define name="top">
-        Pesquisa Ajax
+        Administrador - Consultar Usuário
     </ui:define>
-
     <ui:define name="content">
-<!--
-            <h:outputText id ="indicacao"
-                          value="Termo de pesquisa"
-            />
--->
         Termo de pesquisa <br/><br/>
         <h:form>
-
             <h:panelGrid columns="2">
                 <h:outputLabel value="Nome:"
                                for="nome" />
@@ -31,12 +24,11 @@
                 </h:inputText>
             </h:panelGrid>
         </h:form>
-
         <h:panelGroup id="resultados">
 
             <h:panelGroup id ="resultadosNum"
                           rendered="#{utilizadorController.numRes gt 0}">
-                Resultados: #{utilizadorController.numRes}
+                Usuário(s) encontrado(s): #{utilizadorController.numRes}
                 <br/><br/>
             </h:panelGroup>
 
@@ -88,12 +80,15 @@
                     <h:outputText value="#{item.activo}"/>
                 </h:column>
             </h:dataTable>
-        </h:panelGroup>
-
-        
+        </h:panelGroup>        
+        <h:form>
+            <br />
+            <h:commandLink action="menuAdmin" value="Voltar"/>
+        </h:form>
     </ui:define>
-
     <ui:define name="bottom">
+        Plataformas de Desenvolvimento - 2016/2017
     </ui:define>
 
 </ui:composition>
+

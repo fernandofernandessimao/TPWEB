@@ -94,9 +94,14 @@ public class UtilizadorFacade implements UtilizadorFacadeLocal {
 
     @Override
     public List<TUtilizador> findUsers(String username) {
-        String s = "'"+ username + "%'";
+        String s = username + "%";
         System.out.println(s);
-        return dao.getEntityManager().createNativeQuery("SELECT * FROM t_utilizador WHERE username like 'f%'").getResultList();
+        return dao.getEntityManager().createNativeQuery("SELECT * FROM t_utilizador WHERE username like '%" + username + "%'").getResultList();
     }
 
+    @Override
+    public void changeConectado(TUtilizador user, boolean estado) {
+        dao.getEntityManager().createNativeQuery("UPDATE t_utilizador SET conectado ='" + estado + "' "
+                + "WHERE username='" + user.getUsername() + "';").executeUpdate();
+    }
 }

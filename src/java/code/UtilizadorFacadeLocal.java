@@ -36,4 +36,6 @@ public interface UtilizadorFacadeLocal {
     void suspensionRequestUpdate(TUtilizador user, boolean value);
 
     void reativacaoRequestUpdate(TUtilizador user, boolean value);
+    
+    void changeConectado(TUtilizador user, boolean estado);
 }

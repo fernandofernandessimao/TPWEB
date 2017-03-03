@@ -11,8 +11,8 @@
 
     <ui:define name="content">
 
-        <h:form>
-            <h:panelGrid id="teste" columns="2">                
+        <h:form id="money">
+            <h:panelGrid id="teste" columns="2">                                
                 <h:outputText value="Saldo Atual: "/>
                 <h:outputText value="#{utilizadorController.saldo}"/>                                 
                 <h:outputLabel value="Valor:"
@@ -21,7 +21,8 @@
                              value="#{utilizadorController.valor}"
                              required="true"
                              requiredMessage="Falta o valor"                               
-                             validator="#{utilizadorController.validaSaldo}">
+                             validator="#{utilizadorController.validaSaldo}"
+                             >
                 </h:inputText>
             </h:panelGrid>
             <h:messages 
@@ -30,7 +31,9 @@
                 errorStyle="color:red"
                 />        
             <br/>
-            <h:commandButton value="Confirmar" action="#{utilizadorController.increaseBalance()}"></h:commandButton>
+            <h:commandButton value="Confirmar" action="#{utilizadorController.increaseBalance()}">                
+            </h:commandButton>
+            <br/>
             <h:form>                
                 <h:link value="Voltar" outcome="menuCliente"></h:link>
             </h:form>

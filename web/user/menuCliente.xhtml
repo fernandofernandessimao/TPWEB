@@ -12,7 +12,7 @@
     <ui:define name="content">
 
         <h:panelGrid columns="2">           
-            
+
             <h:link value ="Gerir Conta" outcome="GerirCliente" />
             <br></br>
             <h:link value ="Itens à venda" outcome="VerItensPessoaisVenda" />
@@ -34,8 +34,12 @@
             <h:link value ="Histórico de Compras e Vendas" outcome="HistoricoAcoes" />
             <br></br>
             <h:link value ="Gerir Saldo" outcome="GerirSaldo" />
-            <br></br>
-            <h:link value ="Newsletter" outcome="Newsletter" />
+            <br/>
+            <h:link value ="Newsletter" outcome="Newsletter" />               
+            <br/>
+            <h:form>
+                <h:commandButton value="Logout" action="#{utilizadorController.logout()}"/>
+            </h:form>
         </h:panelGrid>
     </ui:define>
 

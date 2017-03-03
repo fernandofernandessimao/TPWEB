@@ -18,7 +18,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.model.DataModel;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 
@@ -88,7 +87,7 @@ public class UtilizadorController implements Serializable {
         if ((findname == null) || (findname.length() == 0)) {
             return;
         }
-        todas.stream().filter((p) -> (p.getNome().contains(findname))).forEachOrdered((p) -> {
+        todas.stream().filter((p) -> (p.getUsername().contains(findname))).forEachOrdered((p) -> {
             result.add(p);
         });
         NumRes = result.size();
@@ -160,7 +159,7 @@ public class UtilizadorController implements Serializable {
 
     public float getSaldo() {
         TUtilizador u = getUser();
-        thisSaldo = u.getSaldo();
+        saldo = thisSaldo = u.getSaldo();
         return u.getSaldo();
     }
 
@@ -308,7 +307,8 @@ public class UtilizadorController implements Serializable {
 
     public String increaseBalance() {
         uFacade.increaseBalance(getUser(), valor + getSaldo());
-        thisSaldo = valor + getSaldo();
+        TUtilizador u = getUser();
+        saldo = u.getSaldo();
         return "menuCliente";
     }
 
@@ -362,7 +362,11 @@ public class UtilizadorController implements Serializable {
             return null;
         }
 
-        u.setConectado(true);
+//        if (u.getConectado() == true) {
+//            context.addMessage(null, new FacesMessage("O utilizador já está conetado."));
+//            return null;
+//        }
+        uFacade.changeConectado(u, true);
 
         //saldo = u.getSaldo();
         // usersOnline.add(u.getUsername());
@@ -372,6 +376,15 @@ public class UtilizadorController implements Serializable {
         }
 
         return "/user/menuCliente";
+    }
+
+    public String logout() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        TUtilizador u = getUser();
+
+        uFacade.changeConectado(u, true);
+        return "/menuVisitante";
     }
 
     public void resetFields() {
