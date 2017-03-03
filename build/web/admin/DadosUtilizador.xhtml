@@ -1,27 +1,99 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./newTemplate.xhtml"
+                template="/newTemplate.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                >
 
     <ui:define name="top">
-        Sistema de Leilão - Dados Utilizador
+        Pesquisa Ajax
     </ui:define>
 
     <ui:define name="content">
+<!--
+            <h:outputText id ="indicacao"
+                          value="Termo de pesquisa"
+            />
+-->
+        Termo de pesquisa <br/><br/>
         <h:form>
-            Username:<br/>
-            <h:inputText id="username"></h:inputText>
-            <h:commandButton value="Pesquisar"></h:commandButton><br/><br/>
-            //Mostra Informação do Utilizador<br/><br/>
-            <h:commandLink value="Voltar" action="menuAdmin"/>
+
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Nome:"
+                               for="nome" />
+                <h:inputText id="nome"
+                             value="#{utilizadorController.findname}">
+                    <f:ajax render="resultados" execute="nome" event="keyup" 
+                            listener="#{utilizadorController.calculaSomePessoas()}"
+                            />
+                </h:inputText>
+            </h:panelGrid>
         </h:form>
+
+        <h:panelGroup id="resultados">
+
+            <h:panelGroup id ="resultadosNum"
+                          rendered="#{utilizadorController.numRes gt 0}">
+                Resultados: #{utilizadorController.numRes}
+                <br/><br/>
+            </h:panelGroup>
+
+            <h:dataTable id ="resultadosLista"
+                         rendered="#{utilizadorController.numRes gt 0}"
+                         value="#{utilizadorController.somePessoas}"
+                         var="item"
+                         border="0"
+                         cellpadding="2"
+                         cellspacing="0"
+                         rowClasses="linhas_impares,linhas_pares"
+                         rules="all"
+                         style="border:solid 1px"
+                         >
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="NumRes"/>
+                    </f:facet>
+                    <h:outputText value="#{utilizadorController.numRes}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nome"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nome}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Morada"/>
+                    </f:facet>
+                    <h:outputText value="#{item.morada}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Username"/>
+                    </f:facet>
+                    <h:outputText value="#{item.username}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Password"/>
+                    </f:facet>
+                    <h:outputText value="#{item.password}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Ativo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.activo}"/>
+                </h:column>
+            </h:dataTable>
+        </h:panelGroup>
+
+        
     </ui:define>
 
     <ui:define name="bottom">
-        Plataformas de Desenvolvimento - 2016/2017
     </ui:define>
 
 </ui:composition>
-

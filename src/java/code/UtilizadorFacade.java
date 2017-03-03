@@ -31,7 +31,7 @@ public class UtilizadorFacade implements UtilizadorFacadeLocal {
         TUtilizador u = new TUtilizador(username, nome, morada, password);
         u.setActivo(true);
         u.setConectado(true);
-        u.setSaldo(500);        
+        u.setSaldo(500);
         dao.getEntityManager().persist(u);
     }
 
@@ -63,10 +63,40 @@ public class UtilizadorFacade implements UtilizadorFacadeLocal {
     @Override
     public void suspensionRequest(TUtilizador user, String reason) {
         TSuspensao s = new TSuspensao();
-        s.setUtilizadorid(user);       
+        s.setUtilizadorid(user);
         s.setRazao(reason);
         s.setPendente(true);
         dao.getEntityManager().persist(s);
+    }
+
+    @Override
+    public TUtilizador getUser(String username) {
+        List<TUtilizador> l = getAll();
+        for (TUtilizador u : l) {
+            if (u.getUsername().equals(username)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void suspensionRequestUpdate(TUtilizador user, boolean value) {
+        dao.getEntityManager().createNativeQuery("UPDATE t_utilizador SET activo='" + value + "' "
+                + "WHERE username='" + user.getUsername() + "';").executeUpdate();
+    }
+
+    @Override
+    public void reativacaoRequestUpdate(TUtilizador user, boolean value) {
+        dao.getEntityManager().createNativeQuery("UPDATE t_utilizador SET activo='" + value + "' "
+                + "WHERE username='" + user.getUsername() + "';").executeUpdate();
+    }
+
+    @Override
+    public List<TUtilizador> findUsers(String username) {
+        String s = "'"+ username + "%'";
+        System.out.println(s);
+        return dao.getEntityManager().createNativeQuery("SELECT * FROM t_utilizador WHERE username like 'f%'").getResultList();
     }
 
 }

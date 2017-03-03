@@ -17,16 +17,23 @@ public interface UtilizadorFacadeLocal {
 
     List<TUtilizador> getAll();
 
+    List<TUtilizador> findUsers(String username);
+    
+    TUtilizador getUser(String username);
+
     void createNew(String username, String nome, String morada, String password);
 
     void changeName(TUtilizador user, String nome);
-    
+
     void changeAdress(TUtilizador user, String address);
-    
+
     void changePassword(TUtilizador user, String password);
-    
+
     void increaseBalance(TUtilizador user, float valor);
-    
+
     void suspensionRequest(TUtilizador user, String reason);
-    
+
+    void suspensionRequestUpdate(TUtilizador user, boolean value);
+
+    void reativacaoRequestUpdate(TUtilizador user, boolean value);
 }

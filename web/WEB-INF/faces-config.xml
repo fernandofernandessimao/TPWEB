@@ -16,5 +16,9 @@
             <base-name>/suspensao</base-name>
             <var>suspensao</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/reativacao</base-name>
+            <var>reativacao</var>
+        </resource-bundle>
     </application>
 </faces-config>

@@ -9,8 +9,13 @@
         Administrador - Editar Suspensão
     </ui:define>
     <ui:define name="content">
+        <h:panelGroup id="messagePanel" layout="block">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+        </h:panelGroup>
         <h:form>
             <h:panelGrid columns="2">                
+                <h:outputLabel value="Username" for="utilizadorid" />
+                <h:inputText readonly="true" id="utilizadorid" value="#{tSuspensaoController.selected.utilizadorid}" title="#{suspensao.EditTSuspensaoTitle_utilizadorid}"></h:inputText>
                 <h:outputLabel value="#{suspensao.EditTSuspensaoLabel_razao}" for="razao" />
                 <h:inputText readonly="true" id="razao" value="#{tSuspensaoController.selected.razao}" title="#{suspensao.EditTSuspensaoTitle_razao}" required="true" requiredMessage="#{suspensao.EditTSuspensaoRequiredMessage_razao}"/>
 
@@ -25,14 +30,16 @@
                     <f:selectItem itemValue="true" itemLabel="true" />
                     <f:selectItem itemValue="false" itemLabel="false" />	   							
                 </h:selectOneMenu>                
-                <h:panelGroup rendered="#{tSuspensaoController.selected.dataProc != null}">
-                    <h:outputLabel value="#{suspensao.EditTSuspensaoLabel_dataProc}" for="dataProc" />
-                    <h:inputText readonly="true" id="dataProc" value="#{tSuspensaoController.selected.dataProc}" title="#{suspensao.EditTSuspensaoTitle_dataProc}" >
-                        <f:convertDateTime pattern="yyyy/MM/dd" />
-                    </h:inputText>
-                </h:panelGroup>
+
+                <h:outputLabel value="#{suspensao.EditTSuspensaoLabel_dataProc}" for="dataProc" />
+                <h:inputText readonly="true" id="dataProc" value="#{tSuspensaoController.selected.dataProc}" title="#{suspensao.EditTSuspensaoTitle_dataProc}" >
+                    <f:convertDateTime pattern="yyyy/MM/dd" />
+                </h:inputText>
+
+
                 <h:outputLabel value="#{suspensao.EditTSuspensaoLabel_razaoRej}" for="razaoRej" />
                 <h:inputText id="razaoRej" value="#{tSuspensaoController.selected.razaoRej}" title="#{suspensao.EditTSuspensaoTitle_razaoRej}" />                
+
             </h:panelGrid>
             <h:commandLink action="#{tSuspensaoController.update}" value="Confirmar"/>                     
             <br />

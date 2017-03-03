@@ -4,9 +4,9 @@ import code.util.JsfUtil;
 import code.util.PaginationHelper;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -37,6 +37,8 @@ public class TAdesaoController implements Serializable {
     boolean pendente;
     boolean aceite;
 
+ 
+    
     public boolean isPendente() {
         return pendente;
     }

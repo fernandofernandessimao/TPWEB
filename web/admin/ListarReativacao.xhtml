@@ -6,46 +6,40 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="top">
-        Administrador - Pedidos de Suspensão
+        Administrador - Pedidos de Reativação
     </ui:define>
     <ui:define name="content">
         <h:form >
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            <h:outputText escape="false" value="Nenhum pedido de suspensão encontrado" rendered="#{tSuspensaoController.items.rowCount == 0}"/>
-            <h:panelGroup rendered="#{tSuspensaoController.items.rowCount > 0}">
-                <h:outputText value="#{tSuspensaoController.pagination.pageFirstItem + 1}..#{tSuspensaoController.pagination.pageLastItem + 1}/#{tSuspensaoController.pagination.itemsCount}"/>&nbsp;
-                <h:commandLink action="#{tSuspensaoController.previous}" value="#{suspensao.Previous} #{tSuspensaoController.pagination.pageSize}" rendered="#{tSuspensaoController.pagination.hasPreviousPage}"/>&nbsp;
-                <h:commandLink action="#{tSuspensaoController.next}" value="#{suspensao.Next} #{tSuspensaoController.pagination.pageSize}" rendered="#{tSuspensaoController.pagination.hasNextPage}"/>&nbsp;
-                <h:dataTable value="#{tSuspensaoController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+            <h:outputText escape="false" value="Nenhum pedido de reativação encontrado" rendered="#{tReactivacaoController.items.rowCount == 0}"/>
+            <h:panelGroup rendered="#{tReactivacaoController.items.rowCount > 0}">
+                <h:outputText value="#{tReactivacaoController.pagination.pageFirstItem + 1}..#{tReactivacaoController.pagination.pageLastItem + 1}/#{tReactivacaoController.pagination.itemsCount}"/>&nbsp;
+                <h:commandLink action="#{tReactivacaoController.previous}" value="#{reativacao.Previous} #{tReactivacaoController.pagination.pageSize}" rendered="#{tReactivacaoController.pagination.hasPreviousPage}"/>&nbsp;
+                <h:commandLink action="#{tReactivacaoController.next}" value="#{reativacao.Next} #{tReactivacaoController.pagination.pageSize}" rendered="#{tReactivacaoController.pagination.hasNextPage}"/>&nbsp;
+                <h:dataTable value="#{tReactivacaoController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="#{suspensao.ListTSuspensaoTitle_id}"/>
+                            <h:outputText value="#{reativacao.ListTReactivacaoTitle_id}"/>
                         </f:facet>
                         <h:outputText value="#{item.id}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="#{suspensao.ListTSuspensaoTitle_razao}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.razao}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{suspensao.ListTSuspensaoTitle_pendente}"/>
+                            <h:outputText value="#{reativacao.ListTReactivacaoTitle_pendente}"/>
                         </f:facet>
                         <h:outputText value="#{item.pendente}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="#{suspensao.ListTSuspensaoTitle_aceite}"/>
+                            <h:outputText value="#{reativacao.ListTReactivacaoTitle_aceite}"/>
                         </f:facet>
                         <h:outputText value="#{item.aceite}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="#{suspensao.ListTSuspensaoTitle_dataProc}"/>
+                            <h:outputText value="#{reativacao.ListTReactivacaoTitle_dataProc}"/>
                         </f:facet>
                         <h:outputText value="#{item.dataProc}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
@@ -53,21 +47,22 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="#{suspensao.ListTSuspensaoTitle_razaoRej}"/>
+                            <h:outputText value="#{reativacao.ListTReactivacaoTitle_razaoRej}"/>
                         </f:facet>
                         <h:outputText value="#{item.razaoRej}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="#{suspensao.ListTSuspensaoTitle_utilizadorid}"/>
+                            <h:outputText value="#{reativacao.ListTReactivacaoTitle_utilizadorid}"/>
                         </f:facet>
                         <h:outputText value="#{item.utilizadorid}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="&nbsp;"/>
-                        </f:facet>                           
-                        <h:commandLink action="#{tSuspensaoController.prepareEdit}" value="Editar"/>                            
+                        </f:facet>                            
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{tReactivacaoController.prepareEdit}" value="#{reativacao.ListTReactivacaoEditLink}"/>                            
                     </h:column>
                 </h:dataTable>
             </h:panelGroup>                

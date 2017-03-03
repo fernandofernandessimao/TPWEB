@@ -43,12 +43,16 @@ public class UtilizadorController implements Serializable {
 
     final List<String> usersOnline = new ArrayList<>();
 
+    List<TUtilizador> findUsers = new ArrayList<>();
+
     String username;
     String errorMsg;
     String nome;
     String morada;
     String password, newPassword = null, oldPassword = null;
     String razao;
+    String findname = null;
+    int usersFound = 0;
     float saldo, thisSaldo;
     float valor;
     boolean active;
@@ -66,7 +70,33 @@ public class UtilizadorController implements Serializable {
     final String IC = "Item Cancelado";
     final String IE = "Item Expirado";
 
-    DataModel listAdesao;
+    private int NumRes = 0;
+    private List<TUtilizador> result = new ArrayList<>();
+
+    ;
+    public int getNumRes() {
+        return NumRes;
+    }
+
+    public void calculaSomePessoas() {
+        NumRes = 0;
+        result.clear();
+        List<TUtilizador> todas = uFacade.getAll();
+        // Este método não está nada optimizado
+        // O filtro deverá ser feito na pesquisa à base de dados
+        // exemplo, uma named query findByName
+        if ((findname == null) || (findname.length() == 0)) {
+            return;
+        }
+        todas.stream().filter((p) -> (p.getNome().contains(findname))).forEachOrdered((p) -> {
+            result.add(p);
+        });
+        NumRes = result.size();
+    }
+
+    public List<TUtilizador> getSomePessoas() {
+        return result;
+    }
 
     public String getOldPassword() {
         return oldPassword;
@@ -102,6 +132,10 @@ public class UtilizadorController implements Serializable {
 
     public String getNome() {
         return nome;
+    }
+
+    public int getUserFound() {
+        return usersFound;
     }
 
     public void setNome(String nome) {
@@ -189,7 +223,7 @@ public class UtilizadorController implements Serializable {
             return null;
         }
         sFacade.addSuspension(u, razao);
-        
+
         Date date = new Date();
         nFacade.addNewsLetter(PS, date, "Pedido de Suspensão efetuado por " + u.getNome());
         return "menuCliente";
@@ -220,6 +254,36 @@ public class UtilizadorController implements Serializable {
             }
         }
         return null;
+    }
+
+    public void findUsers() {
+
+        usersFound = 0;
+        findUsers.clear();
+
+        if (findname == null || findname.isEmpty()) {
+            return;
+
+        }
+        findUsers = uFacade.findUsers(findname);
+        usersFound = findUsers.size();
+
+    }
+
+    public int getNumberUsers() {
+        return findUsers.size();
+    }
+
+    public String getFindname() {
+        return findname;
+    }
+
+    public void setFindname(String findname) {
+        this.findname = findname;
+    }
+
+    public List<TUtilizador> getUsersFound() {
+        return findUsers;
     }
 
     public String changeName() {
@@ -264,7 +328,7 @@ public class UtilizadorController implements Serializable {
             context.addMessage(null, new FacesMessage("A conta ainda não foi aprovada pelo administrador."));
             return null;
         }
-        
+
         Date date = new Date();
         nFacade.addNewsLetter(PR, date, "Pedido de Reativação efetuado por " + username);
 
@@ -301,9 +365,8 @@ public class UtilizadorController implements Serializable {
         u.setConectado(true);
 
         //saldo = u.getSaldo();
-       // usersOnline.add(u.getUsername());
-
-       // resetFields();
+        // usersOnline.add(u.getUsername());
+        // resetFields();
         if (u.getUsername().compareTo("admin") == 0) {
             return "/admin/menuAdmin";
         }

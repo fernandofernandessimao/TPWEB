@@ -17,14 +17,14 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("tSuspensaoController")
+@Named("tReactivacaoController")
 @SessionScoped
-public class TSuspensaoController implements Serializable {
+public class TReactivacaoController implements Serializable {
 
-    private TSuspensao current;
+    private TReactivacao current;
     private DataModel items = null;
     @EJB
-    private code.TSuspensaoFacade ejbFacade;
+    private code.TReactivacaoFacade ejbFacade;
     @EJB
     private NewsletterFacadeLocal nFacade;
     @EJB
@@ -32,18 +32,18 @@ public class TSuspensaoController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public TSuspensaoController() {
+    public TReactivacaoController() {
     }
 
-    public TSuspensao getSelected() {
+    public TReactivacao getSelected() {
         if (current == null) {
-            current = new TSuspensao();
+            current = new TReactivacao();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private TSuspensaoFacade getFacade() {
+    private TReactivacaoFacade getFacade() {
         return ejbFacade;
     }
 
@@ -71,13 +71,13 @@ public class TSuspensaoController implements Serializable {
     }
 
     public String prepareView() {
-        current = (TSuspensao) getItems().getRowData();
+        current = (TReactivacao) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new TSuspensao();
+        current = new TReactivacao();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -85,18 +85,18 @@ public class TSuspensaoController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/suspensao").getString("TSuspensaoCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/reativacao").getString("TReactivacaoCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/suspensao").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/reativacao").getString("PersistenceErrorOccured"));
             return null;
         }
     }
 
     public String prepareEdit() {
-        current = (TSuspensao) getItems().getRowData();
+        current = (TReactivacao) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "EditarSuspensao";
+        return "EditarReativacao";
     }
 
     public String update() {
@@ -105,25 +105,24 @@ public class TSuspensaoController implements Serializable {
             current.setDataProc(date);
 
             TUtilizador u = uFacade.getUser(current.getUtilizadorid().getUsername());
-
             if (!current.getPendente() && current.getAceite()) {
-                nFacade.addNewsLetter("Suspensão Aceita", date, "Pedido de Suspensão efetuado por " + u.getUsername() + "aceito.");
-                uFacade.suspensionRequestUpdate(u, true);
+                nFacade.addNewsLetter("Reativação Aceita", date, "Pedido de Reativação efetuado por " + u.getUsername() + "aceito.");
+                uFacade.reativacaoRequestUpdate(u, true);
             } else {
-                nFacade.addNewsLetter("Suspensão Negada", date, "Pedido de Suspensão efetuado por " + u.getUsername() + " recusado. Motivo: " + current.getRazaoRej());
-                uFacade.suspensionRequestUpdate(u, false);
+                nFacade.addNewsLetter("Reativação Negada", date, "Pedido de Reativação efetuado por " + u.getUsername() + " recusado. Motivo: " + current.getRazaoRej());
+                uFacade.reativacaoRequestUpdate(u, true);
             }
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/suspensao").getString("TSuspensaoUpdated"));
-            return "ListarSuspensao";
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/reativacao").getString("TReactivacaoUpdated"));
+            return "ListarReativacao";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/suspensao").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/reativacao").getString("PersistenceErrorOccured"));
             return null;
         }
     }
 
     public String destroy() {
-        current = (TSuspensao) getItems().getRowData();
+        current = (TReactivacao) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -147,9 +146,9 @@ public class TSuspensaoController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/suspensao").getString("TSuspensaoDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/reativacao").getString("TReactivacaoDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/suspensao").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/reativacao").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -203,21 +202,21 @@ public class TSuspensaoController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public TSuspensao getTSuspensao(java.lang.Integer id) {
+    public TReactivacao getTReactivacao(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = TSuspensao.class)
-    public static class TSuspensaoControllerConverter implements Converter {
+    @FacesConverter(forClass = TReactivacao.class)
+    public static class TReactivacaoControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            TSuspensaoController controller = (TSuspensaoController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "tSuspensaoController");
-            return controller.getTSuspensao(getKey(value));
+            TReactivacaoController controller = (TReactivacaoController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "tReactivacaoController");
+            return controller.getTReactivacao(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -237,11 +236,11 @@ public class TSuspensaoController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof TSuspensao) {
-                TSuspensao o = (TSuspensao) object;
+            if (object instanceof TReactivacao) {
+                TReactivacao o = (TReactivacao) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + TSuspensao.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + TReactivacao.class.getName());
             }
         }
 
