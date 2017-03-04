@@ -102,7 +102,7 @@ public class TItem implements Serializable {
     private Collection<TDenunciaItem> tDenunciaItemCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemid")
     private Collection<TCancelamento> tCancelamentoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iditem")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemid")
     private Collection<TMensagem> tMensagemCollection;
 
     public TItem() {
