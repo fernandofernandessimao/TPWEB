@@ -102,6 +102,8 @@ public class TItem implements Serializable {
     private Collection<TDenunciaItem> tDenunciaItemCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemid")
     private Collection<TCancelamento> tCancelamentoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iditem")
+    private Collection<TMensagem> tMensagemCollection;
 
     public TItem() {
     }
@@ -253,6 +255,46 @@ public class TItem implements Serializable {
         this.tCancelamentoCollection = tCancelamentoCollection;
     }
 
+    public Collection<TUtilizador> gettUtilizadorSegueCollection() {
+        return tUtilizadorSegueCollection;
+    }
+
+    public void settUtilizadorSegueCollection(Collection<TUtilizador> tUtilizadorSegueCollection) {
+        this.tUtilizadorSegueCollection = tUtilizadorSegueCollection;
+    }
+
+    public Collection<TUtilizador> gettUtilizadorLicitacaoCollection() {
+        return tUtilizadorLicitacaoCollection;
+    }
+
+    public void settUtilizadorLicitacaoCollection(Collection<TUtilizador> tUtilizadorLicitacaoCollection) {
+        this.tUtilizadorLicitacaoCollection = tUtilizadorLicitacaoCollection;
+    }
+
+    public Collection<TDenunciaItem> gettDenunciaItemCollection() {
+        return tDenunciaItemCollection;
+    }
+
+    public void settDenunciaItemCollection(Collection<TDenunciaItem> tDenunciaItemCollection) {
+        this.tDenunciaItemCollection = tDenunciaItemCollection;
+    }
+
+    public Collection<TCancelamento> gettCancelamentoCollection() {
+        return tCancelamentoCollection;
+    }
+
+    public void settCancelamentoCollection(Collection<TCancelamento> tCancelamentoCollection) {
+        this.tCancelamentoCollection = tCancelamentoCollection;
+    }
+
+    public Collection<TMensagem> gettMensagemCollection() {
+        return tMensagemCollection;
+    }
+
+    public void settMensagemCollection(Collection<TMensagem> tMensagemCollection) {
+        this.tMensagemCollection = tMensagemCollection;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

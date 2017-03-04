@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package code;
 
 import java.io.Serializable;
@@ -21,10 +16,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Fernando
- */
 @Entity
 @Table(name = "t_mensagem")
 @XmlRootElement
@@ -36,6 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TMensagem.findBySender", query = "SELECT t FROM TMensagem t WHERE t.senderid = :senderid")
     ,
     @NamedQuery(name = "TMensagem.findByReceptor", query = "SELECT t FROM TMensagem t WHERE t.receptorid = :receptorid")
+    ,
+    @NamedQuery(name = "TMensagem.findByItemId", query = "SELECT t FROM TMensagem t WHERE t.itemid = :itemid")
     ,
     @NamedQuery(name = "TMensagem.findByMensagem", query = "SELECT t FROM TMensagem t WHERE t.mensagem = :mensagem")
     ,
@@ -63,6 +56,9 @@ public class TMensagem implements Serializable {
     @JoinColumn(name = "receptorid", referencedColumnName = "username")
     @ManyToOne(optional = false)
     private TUtilizador receptorid;
+    @JoinColumn(name = "itemid", referencedColumnName = "id")
+    @ManyToOne(optional = true)
+    private TItem itemid;
 
     public TMensagem() {
     }
@@ -118,6 +114,14 @@ public class TMensagem implements Serializable {
         this.receptorid = receptorid;
     }
 
+    public TItem getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(TItem itemid) {
+        this.itemid = itemid;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -142,5 +146,4 @@ public class TMensagem implements Serializable {
     public String toString() {
         return "local.TMensagem[ id=" + id + " ]";
     }
-
 }
