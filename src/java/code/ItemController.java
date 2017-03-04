@@ -168,7 +168,7 @@ public class ItemController implements Serializable{
         
         return vr;
     }
-
+    
     public String prepareList() {
         recreateModel();
         return "List";

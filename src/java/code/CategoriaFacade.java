@@ -36,5 +36,12 @@ public class CategoriaFacade implements CategoriaFacadeLocal {
         dao.getEntityManager().createNativeQuery("UPDATE t_categoria SET nome='" + novaCategoria + "' "
                 + "WHERE nome='" + categoria.getId() + "';").executeUpdate();
     }
+    
+    @Override
+    public TCategoria getCategoria(String nome) {
+        return (TCategoria) dao.getEntityManager().createNamedQuery("TCategoria.findByNome")
+                .setParameter("nome", nome)
+                .getSingleResult();
+    }
 
 }

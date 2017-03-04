@@ -20,4 +20,6 @@ public interface CategoriaFacadeLocal {
     void addCategoria(String categoria);
 
     void changeCategoria(TCategoria categoria, String novaCategoria);
+    
+    TCategoria getCategoria(String nome);
 }

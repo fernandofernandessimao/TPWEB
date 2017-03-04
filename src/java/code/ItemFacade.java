@@ -36,6 +36,11 @@ public class ItemFacade implements ItemFacadeLocal {
     public List<TItem> ListByPrazo() {
         return dao.getEntityManager().createNamedQuery("SELECT t FROM TItem t ORDER BY t.prazo").getResultList();
     }
+    
+    @Override
+    public void addItem(TItem item) {
+        dao.getEntityManager().persist(item);
+    }
 
     @Override
     public void seguir(TUtilizador user, TItem item) {

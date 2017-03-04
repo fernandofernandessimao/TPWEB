@@ -16,6 +16,8 @@ public interface ItemFacadeLocal {
 
     List<TItem> ListByPrazo();
     
+    public void addItem(TItem item);
+    
     void seguir(TUtilizador user, TItem item);
 
     void desseguir(TUtilizador user, TItem item);

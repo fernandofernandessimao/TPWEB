@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -39,6 +40,10 @@ public class UtilizadorController implements Serializable {
     private AdesaoFacadeLocal aFacade;
     @EJB
     private MensagemFacadeLocal mFacade;
+    @EJB
+    private CategoriaFacadeLocal cFacade;
+    @EJB
+    private ItemFacadeLocal iFacade;
 
     final List<String> usersOnline = new ArrayList<>();
 
@@ -51,7 +56,16 @@ public class UtilizadorController implements Serializable {
     String password, newPassword = null, oldPassword = null;
     String razao;
     String findname = null;
-    String mensagem;
+    String mensagem, descricao;
+    String categoria;
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
 
     public String getMensagem() {
         return mensagem;
@@ -63,8 +77,10 @@ public class UtilizadorController implements Serializable {
     int usersFound = 0;
     float saldo, thisSaldo;
     float valor;
+    float precoInicial, precoCompreja;
     boolean active;
     boolean connected;
+    int days;
     final String PA = "Pedido de Adesao";
     final String PR = "Pedido de Reativação";
     final String PS = "Pedido de Suspensão";
@@ -82,9 +98,40 @@ public class UtilizadorController implements Serializable {
     private int NumRes = 0;
     private List<TUtilizador> result = new ArrayList<>();
 
-    ;
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
     public int getNumRes() {
         return NumRes;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
+    }
+
+    public float getPrecoInicial() {
+        return precoInicial;
+    }
+
+    public void setPrecoInicial(float precoInicial) {
+        this.precoInicial = precoInicial;
+    }
+
+    public float getPrecoCompreja() {
+        return precoCompreja;
+    }
+
+    public void setPrecoCompreja(float precoCompreja) {
+        this.precoCompreja = precoCompreja;
     }
 
     public void calculaSomePessoas() {
@@ -416,6 +463,19 @@ public class UtilizadorController implements Serializable {
         });
     }
 
+    public void checkPrices(FacesContext fc, UIComponent uic, Object valor) throws ValidatorException {
+        System.out.println("caralho");
+        System.out.println(getPrecoInicial());
+        System.out.println(getPrecoCompreja());
+        if (getPrecoCompreja() < getPrecoInicial()) {
+            FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Preço inicial deve ser menor que preço imediato",
+                    "");
+            throw new ValidatorException(fmsg);
+        }
+
+    }
+
     public List<TUtilizador> getAll() {
         return uFacade.getAll();
     }
@@ -559,6 +619,10 @@ public class UtilizadorController implements Serializable {
         return list.toArray();
     }
 
+    public Object[] getCategoriaValues() {
+        return cFacade.getAll().toArray();
+    }
+
     public String sendMessage() {
         TMensagem m = new TMensagem(getUser(), uFacade.getUser(receiver), getMensagem());
         mFacade.sendMessage(m);
@@ -585,4 +649,51 @@ public class UtilizadorController implements Serializable {
         return s;
     }
     
+    public String historico(){
+        String s = "";
+        
+        Collection<TItem> itensComprados = getUser().getTItemVendedorCollection();
+        Iterator<TItem> itemIterCom = itensComprados.iterator();
+        while(itemIterCom.hasNext()){
+            TItem item = itemIterCom.next();
+            if(item.getComprado()){
+                s += "ID:" + item.getId() 
+                    + "\nDescrição:" + item.getDescricao()
+                    + "\nPreço Actual:" + item.getValor()
+                    + "\nVendedor:" + item.getVendedorid().getUsername() + "\n\n";
+            }
+        }
+        
+        Collection<TItem> itensVenda = getUser().getTItemVendedorCollection();
+        Iterator<TItem> itemIterVen = itensVenda.iterator();
+        while(itemIterVen.hasNext()){
+            TItem item = itemIterVen.next();
+            s += "ID:" + item.getId() 
+                    + "\nDescrição:" + item.getDescricao()
+                    + "\nPreço Actual:" + item.getValor()
+                    + "\nComprador:" + item.getCompradorid().getUsername() + "\n\n";
+        }
+        
+        return s;
+    }
+    
+    public String addItem() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (getPrecoCompreja() < getPrecoInicial()) {
+            context.addMessage(null, new FacesMessage("Preço inicial deve ser < que preço imediato"));
+            return null;
+        }
+        TItem i = new TItem();
+        i.setCategoriaid(cFacade.getCategoria(getCategoria()));
+        i.setPrecoImediato(getPrecoCompreja());
+        i.setPrecoInicial(getPrecoInicial());
+        i.setDescricao(getDescricao());
+        i.setComprado(false);
+        i.setConcluido(false);
+        i.setVendedorid(getUser());
+        Date currentDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(getDays()));
+        i.setPrazo(currentDate);
+        iFacade.addItem(i);
+        return "menuCliente";
+    }
 }
