@@ -3,7 +3,8 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/newTemplate.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="top">
         Sistema de Leilão - Ver Denuncias
@@ -12,6 +13,65 @@
     <ui:define name="content">
         <p></p>
         <h:form>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:outputText escape="false" value="Não há denuncias contra untilizadores" rendered="#{denunciaUtilizadorController.items.rowCount == 0}"/>
+            <h:panelGroup rendered="#{denunciaUtilizadorController.items.rowCount > 0}">
+                <h:outputText value="Denuncias contra utilizadores"/>&nbsp;
+                <h:outputText value="#{denunciaUtilizadorController.pagination.pageFirstItem + 1}..#{denunciaUtilizadorController.pagination.pageLastItem + 1}/#{denunciaUtilizadorController.pagination.itemsCount}"/>&nbsp;
+                <h:commandLink action="#{denunciaUtilizadorController.previous}" value="Previous #{denunciaUtilizadorController.pagination.pageSize}" rendered="#{denunciaUtilizadorController.pagination.hasPreviousPage}"/>&nbsp;
+                <h:commandLink action="#{denunciaUtilizadorController.next}" value="Next #{denunciaUtilizadorController.pagination.pageSize}" rendered="#{denunciaUtilizadorController.pagination.hasNextPage}"/>&nbsp;
+                <h:dataTable value="#{denunciaUtilizadorController.items}" var="denunciaUtilizador" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Username"/>
+                        </f:facet>
+                        <h:outputText value="#{denunciaUtilizador.username}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Razão"/>
+                        </f:facet>
+                        <h:outputText value="#{denunciaUtilizador.razao}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Data da denuncia"/>
+                        </f:facet>
+                        <h:outputText value="#{denunciaUtilizador.data_den}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:panelGroup>
+            <br/><br/>
+            <h:outputText escape="false" value="Não há denuncias contra itens" rendered="#{denunciaItemController.items.rowCount == 0}"/>
+            <h:panelGroup rendered="#{denunciaItemController.items.rowCount > 0}">
+                <h:outputText value="Denuncias contra itens"/>&nbsp;
+                <h:outputText value="#{denunciaItemController.pagination.pageFirstItem + 1}..#{denunciaItemController.pagination.pageLastItem + 1}/#{denunciaItemController.pagination.itemsCount}"/>&nbsp;
+                <h:commandLink action="#{denunciaItemController.previous}" value="Previous #{denunciaItemController.pagination.pageSize}" rendered="#{denunciaItemController.pagination.hasPreviousPage}"/>&nbsp;
+                <h:commandLink action="#{denunciaItemController.next}" value="Next #{denunciaItemController.pagination.pageSize}" rendered="#{denunciaItemController.pagination.hasNextPage}"/>&nbsp;
+                <h:dataTable value="#{denunciaItemController.items}" var="denunciaItem" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id do Item"/>
+                        </f:facet>
+                        <h:outputText value="#{denunciaItem.id}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Razão"/>
+                        </f:facet>
+                        <h:outputText value="#{denunciaItem.razao}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Data da denuncia"/>
+                        </f:facet>
+                        <h:outputText value="#{denunciaItem.data_den}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:panelGroup>
+            <br/><br/>
             <h:commandLink value="Voltar" action="menuAdmin"/>
         </h:form>
     </ui:define>
