@@ -3,6 +3,8 @@ package code;
 import code.util.JsfUtil;
 import code.util.PaginationHelper;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -30,6 +32,7 @@ public class ItemController implements Serializable{
     private PaginationHelper pagination;
     int id;
     String mensagem;
+    float licitacao;
 
     public int getId() {
         return id;
@@ -45,6 +48,14 @@ public class ItemController implements Serializable{
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+
+    public float getLicitacao() {
+        return licitacao;
+    }
+
+    public void setLicitacao(float licitacao) {
+        this.licitacao = licitacao;
     }
     
     private TItemFacade getFacade() {
@@ -83,24 +94,51 @@ public class ItemController implements Serializable{
         return null;
     }
     
-    public void create() {
-        FacesContext context = FacesContext.getCurrentInstance();
-
+    public void seguir(String username){
+        TUtilizador user = getUser(username);
+        if(user==null)
+            return;
         
+        Collection<TItem> it = user.getTItemSegueCollection();
+        Iterator<TItem> iter = it.iterator();
+        while(iter.hasNext()){
+            if(iter.next().getId()==id){
+                iFacade.seguir(user, getItem());
+            }
+        }
+        iFacade.desseguir(user, getItem());
     }
     
-    public void enviarMensagem(String username) {
+    public void licitacar(String username){
+        TUtilizador user = getUser(username);
+        if(user==null)
+            return;
+        
+        TItem item = getItem();
+        if(item==null)
+            return;
+        
+        if(!item.getConcluido() && licitacao>item.getValor() && user.getSaldo()>=licitacao){
+            iFacade.licitar(user, item, licitacao);
+            if(licitacao>=item.getPrecoImediato()){
+                iFacade.setConcluido(item);
+            }
+        }
+    }
+    
+    public void comprar(String username) {
         FacesContext context = FacesContext.getCurrentInstance();
 
         TUtilizador user = getUser(username);
-        
-        TMensagem m = new TMensagem();
-        m.setItemid(getItem());
-        m.setMensagem(mensagem);
-        m.setSenderid(user);
-        m.setReceptorid(getItem().getVendedorid());
-        m.setLida(false);
-        mFacade.sendMessageByItem(m);
+        if(user==null){
+            return;
+        }
+        if(getItem().getConcluido() && !getItem().getComprado() && 
+                getItem().getValor() <= user.getSaldo() && 
+                user.getUsername().equals(getItem().getCompradorid().getUsername())){
+            iFacade.setComprado(getItem());
+            uFacade.increaseBalance(user, -getItem().getValor());
+        }
     }
     
     public String vendasRecentes() {

@@ -89,10 +89,10 @@
             <br/><br/>
             
             Licitaçaõ:<br/>
-            <h:inputText id="licitacao"></h:inputText>
-            <h:commandButton value="Licitar"></h:commandButton><br/><br/>
+            <h:inputText id="licitacao" value="#{itemController.licitacao}"></h:inputText>
+            <h:commandButton value="Licitar" action="#{itemController.licitacar(utilizadorController.username)}"></h:commandButton><br/><br/>
             
-            <h:commandButton value="Seguir/Desseguir Item"></h:commandButton><br/><br/>
+            <h:commandButton value="Seguir/Desseguir Item" action="#{itemController.seguir(utilizadorController.username)}"></h:commandButton><br/><br/>
             
             Mensagem<br/>
             <h:inputTextarea id="mensagem" value="#{itemController.mensagem}"></h:inputTextarea><br/>
