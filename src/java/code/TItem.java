@@ -46,6 +46,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "TItem.findByUltLicData", query = "SELECT t FROM TItem t WHERE t.ultLicData = :ultLicData")})
 public class TItem implements Serializable {
 
+    @OneToMany(mappedBy = "itemid")
+    private List<TMensagem> tMensagemList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -276,6 +279,15 @@ public class TItem implements Serializable {
     @Override
     public String toString() {
         return "local.TItem[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<TMensagem> getTMensagemList() {
+        return tMensagemList;
+    }
+
+    public void setTMensagemList(List<TMensagem> tMensagemList) {
+        this.tMensagemList = tMensagemList;
     }
     
 }

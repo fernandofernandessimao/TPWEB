@@ -57,6 +57,9 @@ public class TMensagem implements Serializable {
     @NotNull
     @Column(name = "lida")
     private boolean lida;
+    @JoinColumn(name = "itemid", referencedColumnName = "id")
+    @ManyToOne
+    private TItem itemid;
     @JoinColumn(name = "senderid", referencedColumnName = "username")
     @ManyToOne(optional = false)
     private TUtilizador senderid;
@@ -72,6 +75,14 @@ public class TMensagem implements Serializable {
     }
 
     public TMensagem(TUtilizador sender, TUtilizador receiver, String mensagem) {
+        this.senderid = sender;
+        this.receptorid = receiver;
+        this.mensagem = mensagem;
+        this.lida = false;
+    }
+
+    public TMensagem(TItem item, TUtilizador sender, TUtilizador receiver, String mensagem) {
+        this.itemid = item;
         this.senderid = sender;
         this.receptorid = receiver;
         this.mensagem = mensagem;
@@ -100,6 +111,14 @@ public class TMensagem implements Serializable {
 
     public void setLida(boolean lida) {
         this.lida = lida;
+    }
+
+    public TItem getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(TItem itemid) {
+        this.itemid = itemid;
     }
 
     public TUtilizador getSenderid() {
@@ -140,7 +159,7 @@ public class TMensagem implements Serializable {
 
     @Override
     public String toString() {
-        return "local.TMensagem[ id=" + id + " ]";
+        return "code.TMensagem[ id=" + id + " ]";
     }
 
 }
