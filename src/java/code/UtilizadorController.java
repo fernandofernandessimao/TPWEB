@@ -383,7 +383,7 @@ public class UtilizadorController implements Serializable {
 
         TUtilizador u = getUser();
 
-        uFacade.changeConectado(u, true);
+        uFacade.changeConectado(u, false);
         return "/menuVisitante";
     }
 
