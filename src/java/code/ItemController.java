@@ -3,6 +3,7 @@ package code;
 import code.util.JsfUtil;
 import code.util.PaginationHelper;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -36,6 +37,9 @@ public class ItemController implements Serializable{
     String mensagem;
     float licitacao;
     String razao;
+    int findId = 0;
+    private int NumRes = 0;
+    private List<TItem> result = new ArrayList<>();
     
     public String getRazao() {
         return razao;
@@ -68,11 +72,49 @@ public class ItemController implements Serializable{
     public void setLicitacao(float licitacao) {
         this.licitacao = licitacao;
     }
+
+    public int getFindId() {
+        return findId;
+    }
+
+    public void setFindId(int findId) {
+        this.findId = findId;
+    }
+
+    public int getNumRes() {
+        return NumRes;
+    }
+
+    public void setNumRes(int NumRes) {
+        this.NumRes = NumRes;
+    }
+
+    public List<TItem> getResult() {
+        return result;
+    }
+
+    public void setResult(List<TItem> result) {
+        this.result = result;
+    }
     
     private TItemFacade getFacade() {
         return ejbFacade;
     }
-
+    
+    public void calculaIds() {
+        NumRes = 0;
+        result.clear();
+        List<TItem> todas = iFacade.getAll();
+        if (findId == 0) {
+            return;
+        }
+        for(int j=0;j<todas.size();j++){
+            if(todas.get(j).getId()==findId)
+                result.add(todas.get(j));
+        }
+        NumRes = result.size();
+    }
+    
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {

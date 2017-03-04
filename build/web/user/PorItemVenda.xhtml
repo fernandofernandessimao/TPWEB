@@ -3,33 +3,56 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/newTemplate.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:define name="top">
+   <ui:define name="top">
         Sistema de Leilão - Por Item á Venda
     </ui:define>
 
-    <ui:define name="content">
-        <p>Por Item á Venda</p>
+   <ui:define name="content">        
         <h:form>
-            Descrição:<br/>
-            <h:inputTextarea id="descricao"></h:inputTextarea><br/><br/>
-            Preço Inicial:<br/>
-            <h:inputText id="precoInicial"></h:inputText><br/><br/>
-            Preço Compre-já:<br/>
-            <h:inputText id="precoImediato"></h:inputText><br/><br/>
-            Prazo Limite:<br/>
-            <h:inputText id="prazo"></h:inputText><br/><br/>
-            Categoria:<br/>
-            <h:selectOneMenu>
-                
-            </h:selectOneMenu><br/><br/>
-            <h:commandButton value="Confirmar"></h:commandButton>
+            <h:panelGrid>
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                Categoria:<br/>
+                <h:selectOneMenu value="#{utilizadorController.categoria}">
+                    <f:selectItems value="#{utilizadorController.categoriaValues}"
+                                   var="nome"
+                                   itemLabel="#{nome.nome}"
+                                   itemValue="#{nome.nome}" />
+                </h:selectOneMenu>
+                Descrição:<br/>
+                <h:inputTextarea value="#{utilizadorController.descricao}" cols="30" rows="5" id="descricao" required="true" requiredMessage="Preencha a descrição"></h:inputTextarea>
+                Preço Inicial:<br/>
+                <h:inputText maxlength="5" id="precoInicial" value="#{utilizadorController.precoInicial}" required="true" requiredMessage="Falta o preço inicial"></h:inputText>
+                Preço Compre-já:<br/>
+                <h:inputText  maxlength="5"
+                              id="precoImediato"
+                              value="#{utilizadorController.precoCompreja}"
+                              required="true"
+                              requiredMessage="Falta o preço compre já"
+                              />
+                Prazo Limite:<br/>
+                <h:selectOneMenu value="#{utilizadorController.days}">
+                    <f:selectItem itemValue = "1" itemLabel = "1 dia" />
+                    <f:selectItem itemValue = "2" itemLabel = "2 dias" />    
+                    <f:selectItem itemValue = "3" itemLabel = "3 dias" />    
+                    <f:selectItem itemValue = "4" itemLabel = "4 dias" />    
+                    <f:selectItem itemValue = "5" itemLabel = "5 dias" />    
+                    <f:selectItem itemValue = "6" itemLabel = "6 dias" />    
+                    <f:selectItem itemValue = "7" itemLabel = "Uma semana" />    
+                </h:selectOneMenu>
+                <br/>
+            </h:panelGrid>
+            <h:commandButton value="Confirmar" action="#{utilizadorController.addItem()}"></h:commandButton>
+            <br/>
             <h:commandLink value="Voltar" action="menuCliente"/>
         </h:form>
     </ui:define>
 
-    <ui:define name="bottom">
+   <ui:define name="bottom">
         Plataformas de Desenvolvimento - 2016/2017
     </ui:define>
 
