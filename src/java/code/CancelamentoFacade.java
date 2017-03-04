@@ -2,10 +2,9 @@ package code;
 
 import java.util.Date;
 import javax.ejb.EJB;
-import javax.ejb.Singleton;
 import javax.ejb.Stateless;
 
-@Singleton
+@Stateless
 public class CancelamentoFacade implements CancelamentoFacadeLocal {
 
     @EJB
