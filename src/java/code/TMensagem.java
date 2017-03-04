@@ -29,9 +29,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "t_mensagem")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TMensagem.findAll", query = "SELECT t FROM TMensagem t"),
-    @NamedQuery(name = "TMensagem.findById", query = "SELECT t FROM TMensagem t WHERE t.id = :id"),
-    @NamedQuery(name = "TMensagem.findByMensagem", query = "SELECT t FROM TMensagem t WHERE t.mensagem = :mensagem"),
+    @NamedQuery(name = "TMensagem.findAll", query = "SELECT t FROM TMensagem t")
+    ,
+    @NamedQuery(name = "TMensagem.findById", query = "SELECT t FROM TMensagem t WHERE t.id = :id")
+    ,
+    @NamedQuery(name = "TMensagem.findBySender", query = "SELECT t FROM TMensagem t WHERE t.senderid = :senderid")
+    ,
+    @NamedQuery(name = "TMensagem.findByReceptor", query = "SELECT t FROM TMensagem t WHERE t.receptorid = :receptorid")
+    ,
+    @NamedQuery(name = "TMensagem.findByMensagem", query = "SELECT t FROM TMensagem t WHERE t.mensagem = :mensagem")
+    ,
     @NamedQuery(name = "TMensagem.findByLida", query = "SELECT t FROM TMensagem t WHERE t.lida = :lida")})
 public class TMensagem implements Serializable {
 
@@ -64,10 +71,11 @@ public class TMensagem implements Serializable {
         this.id = id;
     }
 
-    public TMensagem(Integer id, String mensagem, boolean lida) {
-        this.id = id;
+    public TMensagem(TUtilizador sender, TUtilizador receiver, String mensagem) {
+        this.senderid = sender;
+        this.receptorid = receiver;
         this.mensagem = mensagem;
-        this.lida = lida;
+        this.lida = false;
     }
 
     public Integer getId() {
@@ -134,5 +142,5 @@ public class TMensagem implements Serializable {
     public String toString() {
         return "local.TMensagem[ id=" + id + " ]";
     }
-    
+
 }

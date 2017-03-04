@@ -4,9 +4,7 @@ import code.util.JsfUtil;
 import code.util.PaginationHelper;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;

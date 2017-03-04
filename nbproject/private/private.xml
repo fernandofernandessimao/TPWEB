@@ -7,18 +7,16 @@
             <file>file:/home/joao1bizarro/NetBeansProjects/TPWEB/web/DadosItem.xhtml</file>
             <file>file:/home/joao1bizarro/NetBeansProjects/TPWEB/web/menuAdmnistrador.xhtml</file>
         </group>
-        <group name="TP1617">
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/WEB-INF/glassfish-resources.xml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/java/code/UtilizadorController.java</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/conf/persistence.xml</file>
-            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/WEB-INF/faces-config.xml</file>
-        </group>
         <group name="Java">
             <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/java/code/UtilizadorController.java</file>
             <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/java/code/ReativacaoFacadeLocal.java</file>
             <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/admin/ListarSuspensao.xhtml</file>
             <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/java/code/ReativacaoFacade.java</file>
+        </group>
+        <group name="TP1617">
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/java/code/MensagemController.java</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/src/java/code/DenunciaItemFacadeLocal.java</file>
+            <file>file:/C:/Users/Fernando/Downloads/TPWEB-20170302T132150Z-001/TPWEB/web/admin/EnviarMensagem.xhtml</file>
         </group>
     </open-files>
 </project-private>

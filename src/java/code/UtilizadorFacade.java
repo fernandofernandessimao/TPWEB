@@ -26,6 +26,12 @@ public class UtilizadorFacade implements UtilizadorFacadeLocal {
                 getResultList();
     }
 
+    public TUtilizador getUser(String username){
+        return (TUtilizador) dao.getEntityManager().createNamedQuery("TUtilizador.findByUsername")
+                .setParameter("username", username)
+                .getSingleResult();
+    }
+    
     @Override
     public void createNew(String nome, String morada, String username, String password) {
         TUtilizador u = new TUtilizador(username, nome, morada, password);
@@ -69,16 +75,16 @@ public class UtilizadorFacade implements UtilizadorFacadeLocal {
         dao.getEntityManager().persist(s);
     }
 
-    @Override
-    public TUtilizador getUser(String username) {
-        List<TUtilizador> l = getAll();
-        for (TUtilizador u : l) {
-            if (u.getUsername().equals(username)) {
-                return u;
-            }
-        }
-        return null;
-    }
+//    @Override
+//    public TUtilizador getUser(String username) {
+//        List<TUtilizador> l = getAll();
+//        for (TUtilizador u : l) {
+//            if (u.getUsername().equals(username)) {
+//                return u;
+//            }
+//        }
+//        return null;
+//    }
 
     @Override
     public void suspensionRequestUpdate(TUtilizador user, boolean value) {

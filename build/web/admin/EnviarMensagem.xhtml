@@ -3,20 +3,31 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/newTemplate.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="top">
-        Sistema de Leilão - Enviar Mensagem
+        Administrador - Enviar Mensagem
     </ui:define>
-
     <ui:define name="content">
+        <h:panelGroup id="messagePanel" layout="block">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+        </h:panelGroup>
         <h:form>
-        Para:<br/>
-        <h:inputText id="username"></h:inputText><br/>
-        Mensagem:<br/>
-        <h:inputTextarea id="mensagem"></h:inputTextarea><br/><br/>
-        <h:commandButton value="Confirmar"></h:commandButton>
-        <h:commandLink value="Voltar" action="menuAdmin"/>
+            Para:<br/>
+            <h:selectOneMenu value="#{utilizadorController.receiver}">
+                <f:selectItems value="#{utilizadorController.receiverValues}" 
+                               var="user"
+                               itemLabel="#{user.username}" 
+                               itemValue="#{user.username}" />
+            </h:selectOneMenu>
+            <br/>
+            <br/>
+            Mensagem:<br/>
+            <h:inputTextarea value="#{utilizadorController.mensagem}" cols="50" rows="5" id="mensagem" required="true" requiredMessage="Escreva a mensagem"></h:inputTextarea><br/><br/>
+            <h:commandButton value="Confirmar" action="#{utilizadorController.sendMessage()}"></h:commandButton>
+            <br/>           
+            <h:link outcome="menuAdmin" value="Voltar"/>
         </h:form>
     </ui:define>
 

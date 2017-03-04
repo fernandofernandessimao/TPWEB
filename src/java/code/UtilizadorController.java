@@ -39,6 +39,8 @@ public class UtilizadorController implements Serializable {
     private ReativacaoFacadeLocal rFacade;
     @EJB
     private AdesaoFacadeLocal aFacade;
+    @EJB
+    private MensagemFacadeLocal mFacade;
 
     final List<String> usersOnline = new ArrayList<>();
 
@@ -51,6 +53,15 @@ public class UtilizadorController implements Serializable {
     String password, newPassword = null, oldPassword = null;
     String razao;
     String findname = null;
+    String mensagem;
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
     int usersFound = 0;
     float saldo, thisSaldo;
     float valor;
@@ -68,6 +79,7 @@ public class UtilizadorController implements Serializable {
     final String IO = "Item Ofertado";
     final String IC = "Item Cancelado";
     final String IE = "Item Expirado";
+    String receiver;
 
     private int NumRes = 0;
     private List<TUtilizador> result = new ArrayList<>();
@@ -528,6 +540,32 @@ public class UtilizadorController implements Serializable {
                     "(" + texto + ")");
             throw new ValidatorException(fmsg);
         }
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String r) {
+        this.receiver = r;
+    }
+
+    public Object[] getReceiverValues() {
+        List<TUtilizador> list = uFacade.getAll();
+        for (TUtilizador u : list) {
+            if (u.getUsername().equals(username)) {
+                list.remove(u);
+                break;
+            }
+        }
+        return list.toArray();
+    }
+
+    public String sendMessage() {
+        TMensagem m = new TMensagem(getUser(), uFacade.getUser(receiver), getMensagem());
+        mFacade.sendMessage(m);
+
+        return "menuAdmin";
     }
 
 }
