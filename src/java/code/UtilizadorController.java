@@ -10,7 +10,9 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
@@ -21,10 +23,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 
-/**
- *
- * @author Fernando
- */
 @Named(value = "utilizadorController")
 @SessionScoped
 public class UtilizadorController implements Serializable {
@@ -568,4 +566,23 @@ public class UtilizadorController implements Serializable {
         return "menuAdmin";
     }
 
+    public String mostrarItensSeguidos(){
+        String s = "";
+        
+        Collection<TItem> itens = getUser().getTItemSegueCollection();
+        Iterator<TItem> itemIter = itens.iterator();
+        while(itemIter.hasNext()){
+            TItem item = itemIter.next();
+            s += "ID:" + item.getId() 
+                    + "\nDescrição:" + item.getDescricao()
+                    + "\nPreço Inicial:" + item.getPrecoInicial()
+                    + "\nPreço Compre-já:" + item.getPrecoImediato()
+                    + "\nPreço Actual:" + item.getValor()
+                    + "\nCategoria:" + item.getCategoriaid().getNome()
+                    + "\nVendedor:" + item.getVendedorid().getUsername() + "\n\n";
+        }
+        
+        return s;
+    }
+    
 }
