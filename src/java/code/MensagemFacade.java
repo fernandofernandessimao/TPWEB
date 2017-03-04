@@ -31,4 +31,9 @@ public class MensagemFacade implements MensagemFacadeLocal {
         m.setLida(false);
         dao.getEntityManager().persist(m);
     }
+    
+    @Override
+    public void sendMessageByItem(TMensagem m) {
+        dao.getEntityManager().persist(m);
+    }
 }

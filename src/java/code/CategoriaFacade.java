@@ -37,4 +37,11 @@ public class CategoriaFacade implements CategoriaFacadeLocal {
                 + "WHERE nome='" + categoria.getId() + "';").executeUpdate();
     }
 
+    @Override
+    public TCategoria getCategoria(String nome) {
+        return (TCategoria) dao.getEntityManager().createNamedQuery("TCategoria.findByNome")
+                .setParameter("nome", nome)
+                .getSingleResult();
+    }
+
 }

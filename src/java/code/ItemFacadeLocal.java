@@ -13,13 +13,11 @@ import javax.ejb.Local;
  * @author Fernando
  */
 @Local
-public interface CategoriaFacadeLocal {
-
-    List<TCategoria> getAll();
-
-    void addCategoria(String categoria);
-
-    void changeCategoria(TCategoria categoria, String novaCategoria);
+public interface ItemFacadeLocal {
     
-    TCategoria getCategoria(String nome);
+    List<TItem> getAll();
+    
+    TItem getItem();
+    
+    void addItem(TItem item);
 }
