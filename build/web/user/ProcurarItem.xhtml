@@ -95,8 +95,8 @@
             <h:commandButton value="Seguir/Desseguir Item"></h:commandButton><br/><br/>
             
             Mensagem<br/>
-            <h:inputTextarea id="mensagem"></h:inputTextarea><br/>
-            <h:commandButton value="Enviar Mensagem"></h:commandButton><br/><br/>
+            <h:inputTextarea id="mensagem" value="#{itemController.mensagem}"></h:inputTextarea><br/>
+            <h:commandButton value="Enviar Mensagem" action="#{itemController.enviarMensagem(utilizadorController.username)}"></h:commandButton><br/><br/>
             
             Denuncia contra o Item:<br/>
             <h:inputTextarea id="denunciaItem" value="#{denunciaItemController.razao}"></h:inputTextarea><br/>

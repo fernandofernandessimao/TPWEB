@@ -19,4 +19,5 @@ public interface MensagemFacadeLocal {
 
     void sendMessage(TMensagem m);
 
+    public void sendMessageByItem(TMensagem m);
 }

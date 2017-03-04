@@ -23,8 +23,13 @@ public class ItemController implements Serializable{
     private code.TItemFacade ejbFacade;
     @EJB
     private ItemFacadeLocal iFacade;
+    @EJB
+    private UtilizadorFacadeLocal uFacade;
+    @EJB
+    private MensagemFacadeLocal mFacade;
     private PaginationHelper pagination;
     int id;
+    String mensagem;
 
     public int getId() {
         return id;
@@ -32,6 +37,14 @@ public class ItemController implements Serializable{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
     }
     
     private TItemFacade getFacade() {
@@ -75,6 +88,20 @@ public class ItemController implements Serializable{
 
         
     }
+    
+    public void enviarMensagem(String username) {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        TUtilizador user = getUser(username);
+        
+        TMensagem m = new TMensagem();
+        m.setItemid(getItem());
+        m.setMensagem(mensagem);
+        m.setSenderid(user);
+        m.setReceptorid(getItem().getVendedorid());
+        m.setLida(false);
+        mFacade.sendMessageByItem(m);
+    }
 
     public String prepareList() {
         recreateModel();
@@ -86,6 +113,16 @@ public class ItemController implements Serializable{
             items = getPagination().createPageDataModel();
         }
         return items;
+    }
+    
+    public TUtilizador getUser(String username) {
+        List<TUtilizador> l = uFacade.getAll();
+        for (TUtilizador u : l) {
+            if (u.getUsername().equals(username)) {
+                return u;
+            }
+        }
+        return null;
     }
 
     private void recreateModel() {
