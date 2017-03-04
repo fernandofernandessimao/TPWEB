@@ -5,6 +5,7 @@
  */
 package code;
 
+import java.util.Date;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +14,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface DenunciaItemFacadeLocal {
+
+    void createDenuncia(TItem item, String razao, Date data);
     
 }

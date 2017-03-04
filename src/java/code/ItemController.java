@@ -3,12 +3,9 @@ package code;
 import code.util.JsfUtil;
 import code.util.PaginationHelper;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,28 +15,26 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
-@Named("denunciaItemController")
+@Named("itemController")
 @SessionScoped
-public class DenunciaItemController implements Serializable{
+public class ItemController implements Serializable{
     private DataModel items = null;
     @EJB
-    private code.TDenunciaItemFacade ejbFacade;
-    @EJB
-    private DenunciaItemFacadeLocal diFacade;
+    private code.TItemFacade ejbFacade;
     @EJB
     private ItemFacadeLocal iFacade;
     private PaginationHelper pagination;
-    String razao;
+    int id;
 
-    public String getRazao() {
-        return razao;
+    public int getId() {
+        return id;
     }
 
-    public void setRazao(String razao) {
-        this.razao = razao;
+    public void setId(int id) {
+        this.id = id;
     }
     
-    private TDenunciaItemFacade getFacade() {
+    private TItemFacade getFacade() {
         return ejbFacade;
     }
 
@@ -61,8 +56,12 @@ public class DenunciaItemController implements Serializable{
         return pagination;
     }
     
-    public TItem getItem(int id) {
-        List<TItem> l = iFacade.getAll();
+    public List<TItem> getAll() {
+        return iFacade.getAll();
+    }
+    
+    public TItem getItem() {
+        List<TItem> l = getAll();
         for (TItem i : l) {
             if (i.getId()==id) {
                 return i;
@@ -71,14 +70,10 @@ public class DenunciaItemController implements Serializable{
         return null;
     }
     
-    public void create(int id) {
+    public void create() {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        TItem it = getItem(id);
         
-        if(it!=null){
-            diFacade.createDenuncia(it, razao, new Date());
-        }
     }
 
     public String prepareList() {
@@ -121,21 +116,21 @@ public class DenunciaItemController implements Serializable{
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public TDenunciaItem getTDenunciaItem(java.lang.Integer id) {
+    public TItem getTItem(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
     
-    @FacesConverter(forClass = TDenunciaItem.class)
-    public static class TDenunciaItemControllerConverter implements Converter {
+    @FacesConverter(forClass = TItem.class)
+    public static class TItemControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            DenunciaItemController controller = (DenunciaItemController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "denunciaItemrController");
-            return controller.getTDenunciaItem(getKey(value));
+            ItemController controller = (ItemController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "itemController");
+            return controller.getTItem(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -155,14 +150,13 @@ public class DenunciaItemController implements Serializable{
             if (object == null) {
                 return null;
             }
-            if (object instanceof TDenunciaItem) {
-                TDenunciaItem o = (TDenunciaItem) object;
+            if (object instanceof TItem) {
+                TItem o = (TItem) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + TDenunciaItem.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + TItem.class.getName());
             }
         }
 
     }
-    
 }

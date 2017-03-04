@@ -3,6 +3,8 @@ package code;
 import code.util.JsfUtil;
 import code.util.PaginationHelper;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -22,7 +24,18 @@ public class DenunciaUtilizadorController implements Serializable{
     private code.TDenunciaUtilizadorFacade ejbFacade;
     @EJB
     private DenunciaUtilizadorFacadeLocal duFacade;
+    @EJB
+    private ItemFacadeLocal iFacade;
     private PaginationHelper pagination;
+    String razao;
+
+    public String getRazao() {
+        return razao;
+    }
+
+    public void setRazao(String razao) {
+        this.razao = razao;
+    }
     
     private TDenunciaUtilizadorFacade getFacade() {
         return ejbFacade;
@@ -49,6 +62,26 @@ public class DenunciaUtilizadorController implements Serializable{
     public String prepareList() {
         recreateModel();
         return "List";
+    }
+    
+    public TItem getItem(int id) {
+        List<TItem> l = iFacade.getAll();
+        for (TItem i : l) {
+            if (i.getId()==id) {
+                return i;
+            }
+        }
+        return null;
+    }
+    
+    public void create(int id) {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        TItem it = getItem(id);
+        
+        if(it!=null){
+            duFacade.createDenuncia(it.getVendedorid(), razao, new Date());
+        }
     }
     
     public DataModel getItems() {

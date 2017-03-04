@@ -3,18 +3,90 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/newTemplate.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="top">
         Sistema de Leilão - Procurar Item
     </ui:define>
 
     <ui:define name="content">
+        <h:panelGroup id="messagePanel" layout="block">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+        </h:panelGroup>
         <h:form>
             Id do Item:<br/>
-            <h:inputText id="idItem"></h:inputText><br/><br/>
+            <h:inputText id="idItem" value="#{itemController.id}"></h:inputText><br/><br/>
             
-            //Mostrat Informação do Item<br/><br/>
+            <h:outputText escape="false" value="Não Existem Itens" rendered="#{itemController.items.rowCount == 0}"/>
+            <h:panelGroup rendered="#{itemController.items.rowCount > 0}">
+                <h:outputText value="#{itemController.pagination.pageFirstItem + 1}..#{tCategoriaController.pagination.pageLastItem + 1}/#{itemController.pagination.itemsCount}"/>&nbsp;
+                <h:commandLink action="#{itemController.previous()}" value="Previous #{itemController.pagination.pageSize}" rendered="#{itemController.pagination.hasPreviousPage}"/>&nbsp;
+                <h:commandLink action="#{itemController.next}" value="Next #{itemController.pagination.pageSize}" rendered="#{itemController.pagination.hasNextPage}"/>&nbsp;
+                <h:dataTable value="#{itemController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Descrição"/>
+                        </f:facet>
+                        <h:outputText value="#{item.descricao}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Preço Inicial"/>
+                        </f:facet>
+                        <h:outputText value="#{item.precoInicial}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Preço Compre-já"/>
+                        </f:facet>
+                        <h:outputText value="#{item.precoImediato}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Preço Atual"/>
+                        </f:facet>
+                        <h:outputText value="#{item.valor}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Prazo"/>
+                        </f:facet>
+                        <h:outputText value="#{item.prazo}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Categoria"/>
+                        </f:facet>
+                        <h:outputText value="#{item.categoriaid.nome}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Data da Ultima Licitação"/>
+                        </f:facet>
+                        <h:outputText value="#{item.ultLicData}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Vendedor"/>
+                        </f:facet>
+                        <h:outputText value="#{item.vendedorid}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Comprador"/>
+                        </f:facet>
+                        <h:outputText value="#{item.compradorid}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:panelGroup>
+            <br/><br/>
             
             Licitaçaõ:<br/>
             <h:inputText id="licitacao"></h:inputText>
@@ -26,10 +98,13 @@
             <h:inputTextarea id="mensagem"></h:inputTextarea><br/>
             <h:commandButton value="Enviar Mensagem"></h:commandButton><br/><br/>
             
-            Denuncia<br/>
-            <h:inputTextarea id="denuncia"></h:inputTextarea><br/>
-            <h:commandButton value="Denunciar Item"></h:commandButton>
-            <h:commandButton value="Denunciar Utilizador"></h:commandButton><br/><br/>
+            Denuncia contra o Item:<br/>
+            <h:inputTextarea id="denunciaItem" value="#{denunciaItemController.razao}"></h:inputTextarea><br/>
+            <h:commandButton value="Denunciar Item" action="#{denunciaItemController.create(itemController.id)}"></h:commandButton><br/><br/>
+            
+            Denuncia contra o Utilizador:<br/>
+            <h:inputTextarea id="denunciaUser" value="#{denunciaUtilizadorController.razao}"></h:inputTextarea><br/>
+            <h:commandButton value="Denunciar Utilizador" action="#{denunciaUtilizadorController.create(itemController.id)}"></h:commandButton><br/><br/>
             
             <h:commandLink value="Voltar" action="menuCliente"></h:commandLink>
         </h:form>
