@@ -382,6 +382,7 @@ public class UtilizadorController implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
 
         TUtilizador u = getUser();
+        username = null;
 
         uFacade.changeConectado(u, false);
         return "/menuVisitante";
