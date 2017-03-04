@@ -102,6 +102,34 @@ public class ItemController implements Serializable{
         m.setLida(false);
         mFacade.sendMessageByItem(m);
     }
+    
+    public String vendasRecentes() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        String vr = "";
+        TItem vra[] = new TItem[3];
+        vra[0] = vra[1] = vra[2] = null;
+        List<TItem> it= iFacade.getAll();
+        
+        for(int i=0;i<it.size();i++){
+            TItem item = it.get(i);
+            if(item.getComprado()){
+                if(vra[0] == null || item.getUltLicData().after(vra[0].getUltLicData())){
+                        vra[2] = vra[1];
+                        vra[1] = vra[0];
+                        vra[0] = item;
+                }
+            }
+        }
+        
+        if(vra[0]!=null)
+            vr = "Descrição:" + vra[0].getDescricao() + "\nValor:" + vra[0].getValor() + "\n";
+        if(vra[1]!=null)    
+            vr += "Descrição:" + vra[1].getDescricao() + "\nValor:" + vra[1].getValor() + "\n";
+        if(vra[2]!=null)
+            vr += "Descrição:" + vra[2].getDescricao() + "\nValor:" + vra[2].getValor() + "\n";
+        
+        return vr;
+    }
 
     public String prepareList() {
         recreateModel();
