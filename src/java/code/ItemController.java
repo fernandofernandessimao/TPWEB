@@ -29,10 +29,21 @@ public class ItemController implements Serializable{
     private UtilizadorFacadeLocal uFacade;
     @EJB
     private MensagemFacadeLocal mFacade;
+    @EJB
+    private CancelamentoFacadeLocal cFacade;
     private PaginationHelper pagination;
     int id;
     String mensagem;
     float licitacao;
+    String razao;
+    
+    public String getRazao() {
+        return razao;
+    }
+
+    public void setRazao(String razao) {
+        this.razao = razao;
+    }
 
     public int getId() {
         return id;
@@ -167,6 +178,14 @@ public class ItemController implements Serializable{
             vr += "Descrição:" + vra[2].getDescricao() + "\nValor:" + vra[2].getValor() + "\n";
         
         return vr;
+    }
+    
+    public String cancelar(){
+        if(!getItem().getConcluido() && !razao.isEmpty()){
+            cFacade.cancelar(getItem(), razao);
+            return "menuAdmin";
+        }
+        return null;
     }
     
     public String prepareList() {

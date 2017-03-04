@@ -10,14 +10,13 @@
     </ui:define>
 
     <ui:define name="content">
-        <p>Cancelar Item</p>
         <h:form>
-        Id do Item:<br/>
-        <h:inputText id="idItem"></h:inputText><br/>
-        Razão:<br/>
-        <h:inputTextarea id="razao"></h:inputTextarea><br/><br/>
-        <h:commandLink value="Confirmar"/>
-        <h:commandLink value="Voltar" action="menuAdmin"/>
+            Id do Item:<br/>
+            <h:inputText id="idItem" value="#{itemController.id}"></h:inputText><br/>
+            Razão:<br/>
+            <h:inputTextarea id="razao" value="#{itemController.razao}"></h:inputTextarea><br/><br/>
+            <h:commandButton value="Confirmar" action="#{itemController.cancelar()}"/>
+            <h:commandLink value="Voltar" action="menuAdmin"/>
         </h:form>
     </ui:define>
 
