@@ -469,7 +469,9 @@ public class UtilizadorController implements Serializable {
     }
 
     public void checkPrices(FacesContext fc, UIComponent uic, Object valor) throws ValidatorException {
-
+        System.out.println("caralho");
+        System.out.println(getPrecoInicial());
+        System.out.println(getPrecoCompreja());
         if (getPrecoCompreja() < getPrecoInicial()) {
             FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Preço inicial deve ser menor que preço imediato",
@@ -634,6 +636,11 @@ public class UtilizadorController implements Serializable {
     }
 
     public String addItem() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (getPrecoCompreja() < getPrecoInicial()) {
+            context.addMessage(null, new FacesMessage("Preço inicial deve ser < que preço imediato"));
+            return null;
+        }
         TItem i = new TItem();
         i.setCategoriaid(cFacade.getCategoria(getCategoria()));
         i.setPrecoImediato(getPrecoCompreja());

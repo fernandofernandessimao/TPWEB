@@ -12,32 +12,40 @@
 
     <ui:define name="content">        
         <h:form>
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            Categoria:<br/>
-            <h:selectOneMenu value="#{utilizadorController.categoria}">
-                <f:selectItems value="#{utilizadorController.categoriaValues}" 
-                               var="nome"
-                               itemLabel="#{nome.nome}" 
-                               itemValue="#{nome.nome}" />
-            </h:selectOneMenu><br/><br/>
-            Descrição:<br/>
-            <h:inputTextarea value="#{utilizadorController.descricao}" cols="30" rows="5" id="descricao" required="true" requiredMessage="Preencha a descrição"></h:inputTextarea><br/><br/>
-            Preço Inicial:<br/>
-            <h:inputText maxlength="5" id="precoInicial" value="#{utilizadorController.precoInicial}" required="true" requiredMessage="Falta o preço inicial"></h:inputText><br/><br/>
-            Preço Compre-já:<br/>
-            <h:inputText  maxlength="5" id="precoImediato" value="#{utilizadorController.precoCompreja}" required="true" requiredMessage="Falta o preço compre já"></h:inputText><br/><br/>
-            Prazo Limite:<br/>
-            <h:selectOneMenu value="#{utilizadorController.days}">
-                <f:selectItem itemValue = "1" itemLabel = "1 dia" /> 
-                <f:selectItem itemValue = "2" itemLabel = "2 dias" />     
-                <f:selectItem itemValue = "3" itemLabel = "3 dias" />     
-                <f:selectItem itemValue = "4" itemLabel = "4 dias" />     
-                <f:selectItem itemValue = "5" itemLabel = "5 dias" />     
-                <f:selectItem itemValue = "6" itemLabel = "6 dias" />     
-                <f:selectItem itemValue = "7" itemLabel = "Uma semana" />     
-            </h:selectOneMenu><br/><br/>
+            <h:panelGrid>
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                Categoria:<br/>
+                <h:selectOneMenu value="#{utilizadorController.categoria}">
+                    <f:selectItems value="#{utilizadorController.categoriaValues}" 
+                                   var="nome"
+                                   itemLabel="#{nome.nome}" 
+                                   itemValue="#{nome.nome}" />
+                </h:selectOneMenu>
+                Descrição:<br/>
+                <h:inputTextarea value="#{utilizadorController.descricao}" cols="30" rows="5" id="descricao" required="true" requiredMessage="Preencha a descrição"></h:inputTextarea>
+                Preço Inicial:<br/>
+                <h:inputText maxlength="5" id="precoInicial" value="#{utilizadorController.precoInicial}" required="true" requiredMessage="Falta o preço inicial"></h:inputText>
+                Preço Compre-já:<br/>
+                <h:inputText  maxlength="5" 
+                              id="precoImediato" 
+                              value="#{utilizadorController.precoCompreja}" 
+                              required="true" 
+                              requiredMessage="Falta o preço compre já" 
+                              />
+                Prazo Limite:<br/>
+                <h:selectOneMenu value="#{utilizadorController.days}">
+                    <f:selectItem itemValue = "1" itemLabel = "1 dia" /> 
+                    <f:selectItem itemValue = "2" itemLabel = "2 dias" />     
+                    <f:selectItem itemValue = "3" itemLabel = "3 dias" />     
+                    <f:selectItem itemValue = "4" itemLabel = "4 dias" />     
+                    <f:selectItem itemValue = "5" itemLabel = "5 dias" />     
+                    <f:selectItem itemValue = "6" itemLabel = "6 dias" />     
+                    <f:selectItem itemValue = "7" itemLabel = "Uma semana" />     
+                </h:selectOneMenu>
+                <br/>
+            </h:panelGrid>
             <h:commandButton value="Confirmar" action="#{utilizadorController.addItem()}"></h:commandButton>
             <br/>
             <h:commandLink value="Voltar" action="menuCliente"/>
