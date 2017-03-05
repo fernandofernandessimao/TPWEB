@@ -20,22 +20,22 @@ public class ItemFacade implements ItemFacadeLocal {
 
     @Override
     public List<TItem> ListByCategoria() {
-        return dao.getEntityManager().createNamedQuery("SELECT t FROM TItem t ORDER BY t.categoriaid.nome").getResultList();
+        return dao.getEntityManager().createQuery("SELECT t FROM TItem t ORDER BY t.categoriaid.nome").getResultList();
     }
 
     @Override
     public List<TItem> ListByDescricao() {
-        return dao.getEntityManager().createNamedQuery("SELECT t FROM TItem t ORDER BY t.descricao").getResultList();
+        return dao.getEntityManager().createQuery("SELECT t FROM TItem t ORDER BY t.descricao").getResultList();
     }
 
     @Override
     public List<TItem> ListByValor() {
-        return dao.getEntityManager().createNamedQuery("SELECT t FROM TItem t ORDER BY t.valor").getResultList();
+        return dao.getEntityManager().createQuery("SELECT t FROM TItem t ORDER BY t.valor").getResultList();
     }
 
     @Override
     public List<TItem> ListByPrazo() {
-        return dao.getEntityManager().createNamedQuery("SELECT t FROM TItem t ORDER BY t.prazo").getResultList();
+        return dao.getEntityManager().createQuery("SELECT t FROM TItem t ORDER BY t.prazo").getResultList();
     }
 
     @Override
