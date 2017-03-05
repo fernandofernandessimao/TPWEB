@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "TItem.findByPrecoImediato", query = "SELECT t FROM TItem t WHERE t.precoImediato = :precoImediato")
     , @NamedQuery(name = "TItem.findByPrazo", query = "SELECT t FROM TItem t WHERE t.prazo = :prazo")
     , @NamedQuery(name = "TItem.findByValor", query = "SELECT t FROM TItem t WHERE t.valor = :valor")
+    , @NamedQuery(name = "TItem.findByBidder", query = "SELECT t FROM TItem t WHERE t.bidder = :bidder")
     , @NamedQuery(name = "TItem.findByConcluido", query = "SELECT t FROM TItem t WHERE t.concluido = :concluido")
     , @NamedQuery(name = "TItem.findByComprado", query = "SELECT t FROM TItem t WHERE t.comprado = :comprado")
     , @NamedQuery(name = "TItem.findByUser", query = "SELECT t FROM TItem t WHERE t.vendedorid = :vendedorid AND t.concluido = :concluido")
@@ -78,6 +79,11 @@ public class TItem implements Serializable {
     private float valor;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "bidder")
+    private String bidder;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "concluido")
     private boolean concluido;
     @Basic(optional = false)
@@ -89,8 +95,8 @@ public class TItem implements Serializable {
     private Date ultLicData;
     @ManyToMany(mappedBy = "tItemSegueCollection")
     private Collection<TUtilizador> tUtilizadorSegueCollection;
-    @ManyToMany(mappedBy = "tItemLicitacaoCollection")
-    private Collection<TUtilizador> tUtilizadorLicitacaoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemid")
+    private Collection<TLicitacao> tLicitacaoCollection;
     @JoinColumn(name = "categoriaid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TCategoria categoriaid;
@@ -173,6 +179,14 @@ public class TItem implements Serializable {
         this.valor = valor;
     }
 
+    public String getBidder() {
+        return bidder;
+    }
+
+    public void setBidder(String bidder) {
+        this.bidder = bidder;
+    }
+    
     public boolean getConcluido() {
         return concluido;
     }
@@ -204,15 +218,6 @@ public class TItem implements Serializable {
 
     public void setTUtilizadorSegueCollection(Collection<TUtilizador> tUtilizadorCollection) {
         this.tUtilizadorSegueCollection = tUtilizadorCollection;
-    }
-
-    @XmlTransient
-    public Collection<TUtilizador> getTUtilizadorLicitacaoCollection() {
-        return tUtilizadorLicitacaoCollection;
-    }
-
-    public void setTUtilizadorLicitacaoCollection(Collection<TUtilizador> tUtilizadorCollection) {
-        this.tUtilizadorLicitacaoCollection = tUtilizadorCollection;
     }
 
     public TCategoria getCategoriaid() {
@@ -265,12 +270,13 @@ public class TItem implements Serializable {
         this.tUtilizadorSegueCollection = tUtilizadorSegueCollection;
     }
 
-    public Collection<TUtilizador> gettUtilizadorLicitacaoCollection() {
-        return tUtilizadorLicitacaoCollection;
+    @XmlTransient
+    public Collection<TLicitacao> getTLicitacaoCollection() {
+        return tLicitacaoCollection;
     }
 
-    public void settUtilizadorLicitacaoCollection(Collection<TUtilizador> tUtilizadorLicitacaoCollection) {
-        this.tUtilizadorLicitacaoCollection = tUtilizadorLicitacaoCollection;
+    public void setTLicitacaoCollection(Collection<TLicitacao> tLicitacaoCollection) {
+        this.tLicitacaoCollection = tLicitacaoCollection;
     }
 
     public Collection<TDenunciaItem> gettDenunciaItemCollection() {

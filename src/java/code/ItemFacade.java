@@ -1,5 +1,6 @@
 package code;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -60,13 +61,15 @@ public class ItemFacade implements ItemFacadeLocal {
 
     @Override
     public void licitar(TUtilizador user, TItem item, float valor) {
-        user.getTItemLicitacaoCollection().add(item);
-        item.getTUtilizadorLicitacaoCollection().add(user);
-        dao.getEntityManager().merge(user);
-        dao.getEntityManager().merge(item);
+        TLicitacao tl = new TLicitacao();
+        tl.setItemid(item);
+        tl.setUtilizadorid(user);
+        tl.setData(new Date());
+        tl.setValor(valor);
+        dao.getEntityManager().persist(tl);
         
         item.setValor(valor);
-        item.setCompradorid(user);
+        item.setBidder(user.getUsername());
         dao.getEntityManager().persist(item);
     }
 

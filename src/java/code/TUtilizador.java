@@ -74,16 +74,13 @@ public class TUtilizador implements Serializable {
     @NotNull
     @Column(name = "conectado")
     private boolean conectado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilizadorid")
+    private Collection<TLicitacao> tLicitacaoCollection;
     @JoinTable(name = "t_segue", joinColumns = {
         @JoinColumn(name = "utilizadorid", referencedColumnName = "username")}, inverseJoinColumns = {
         @JoinColumn(name = "itemid", referencedColumnName = "id")})
     @ManyToMany
     private Collection<TItem> tItemSegueCollection;
-    @JoinTable(name = "t_licitacao", joinColumns = {
-        @JoinColumn(name = "utilizadorid", referencedColumnName = "username")}, inverseJoinColumns = {
-        @JoinColumn(name = "itemid", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<TItem> tItemLicitacaoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendedorid")
     private Collection<TItem> tItemVendedorCollection;
     @OneToMany(mappedBy = "compradorid")
@@ -192,12 +189,12 @@ public class TUtilizador implements Serializable {
     }
 
     @XmlTransient
-    public Collection<TItem> getTItemLicitacaoCollection() {
-        return tItemLicitacaoCollection;
+    public Collection<TLicitacao> getTLicitacaoCollection() {
+        return tLicitacaoCollection;
     }
 
-    public void setTItemLicitacaoCollection(Collection<TItem> tItemCollection) {
-        this.tItemLicitacaoCollection = tItemCollection;
+    public void setTLicitacaoCollection(Collection<TLicitacao> tLicitacaoCollection) {
+        this.tLicitacaoCollection = tLicitacaoCollection;
     }
 
     @XmlTransient
