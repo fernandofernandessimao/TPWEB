@@ -3,7 +3,8 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/newTemplate.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="top">
         Sistema de Leilão - Ver Itens
@@ -11,11 +12,117 @@
 
     <ui:define name="content">
         <h:form>
-            <h:commandButton value="Listar por Categoria"></h:commandButton><br/><br/>
-            <h:commandButton value="Listar por Descrição"></h:commandButton><br/><br/>
-            <h:commandButton value="Listar por Preço"></h:commandButton><br/><br/>
-            <h:commandButton value="Listar por Prazo"></h:commandButton><br/><br/>
-            //MeterTabele com os itens e ordernar pelo botão pressionado
+            <h:commandButton value="Listar por Categoria">
+                <f:ajax render="resultados" transient="true" event="click" listener="#{itemController.getItensPor(1)}"/>
+            </h:commandButton><br/><br/>
+            <h:commandButton value="Listar por Descrição">
+                <f:ajax render="resultados" transient="true" event="click" listener="#{itemController.getItensPor(2)}"/>
+            </h:commandButton><br/><br/>
+            <h:commandButton value="Listar por Preço">
+                <f:ajax render="resultados" transient="true" event="click" listener="#{itemController.getItensPor(3)}"/>
+            </h:commandButton><br/><br/>
+            <h:commandButton value="Listar por Prazo">
+                <f:ajax render="resultados" transient="true" event="click" listener="#{itemController.getItensPor(4)}"/>
+            </h:commandButton><br/><br/>
+            <h:panelGroup id="resultados">
+
+                <h:panelGroup id ="resultadosNum"
+                              rendered="#{itemController.numRes gt 0}">
+                    Item(s) encontrado(s): #{itemController.numRes}
+                    <br/><br/>
+                </h:panelGroup>
+
+                <h:dataTable id ="resultadosLista"
+                         rendered="#{itemController.numRes gt 0}"
+                         value="#{itemController.result}"
+                         var="item"
+                         border="0"
+                         cellpadding="2"
+                         cellspacing="0"
+                         rowClasses="linhas_impares,linhas_pares"
+                         rules="all"
+                         style="border:solid 1px"
+                         >
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Descrição"/>
+                        </f:facet>
+                        <h:outputText value="#{item.descricao}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Preço Inicial"/>
+                        </f:facet>
+                        <h:outputText value="#{item.precoInicial}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Preço Compre-já"/>
+                        </f:facet>
+                        <h:outputText value="#{item.precoImediato}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Prazo"/>
+                        </f:facet>
+                        <h:outputText value="#{item.prazo}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Valor"/>
+                        </f:facet>
+                        <h:outputText value="#{item.valor}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Categoria"/>
+                        </f:facet>
+                        <h:outputText value="#{item.categoriaid.nome}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Vendedor"/>
+                        </f:facet>
+                        <h:outputText value="#{item.vendedorid.username}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Licitador Mais Alto"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bidder}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ultima Licitação"/>
+                        </f:facet>
+                        <h:outputText value="#{item.ultLicData}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Concluido?"/>
+                        </f:facet>
+                        <h:outputText value="#{item.concluido}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Comprado?"/>
+                        </f:facet>
+                        <h:outputText value="#{item.comprado}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Comprador"/>
+                        </f:facet>
+                        <h:outputText value="#{item.compradorid.username}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:panelGroup>
             <h:commandLink value="Voltar" action="menuCliente"/>
         </h:form>
     </ui:define>

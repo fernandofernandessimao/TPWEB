@@ -117,6 +117,36 @@ public class ItemController implements Serializable {
         }
         NumRes = result.size();
     }
+    
+    public void getItensPor(int por) {
+        NumRes = 0;
+        result.clear();
+        List<TItem> todas;
+        if (findId <= 0) {
+            return;
+        }
+        switch(por){
+        case 1:
+            todas = iFacade.ListByCategoria();
+            break;
+        case 2:
+            todas = iFacade.ListByDescricao();
+            break;
+        case 3:
+            todas = iFacade.ListByValor();
+            break;
+        case 4:
+            todas = iFacade.ListByPrazo();
+            break;
+        default:
+            return;
+        }
+                
+        for (int j = 0; j < todas.size(); j++) {
+            result.add(todas.get(j));
+        }
+        NumRes = result.size();
+    }
 
     public PaginationHelper getPagination() {
         if (pagination == null) {
