@@ -80,6 +80,18 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">
+                            <h:outputText value="Licitador Mais Alto"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bidder}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ultima Licitação"/>
+                        </f:facet>
+                        <h:outputText value="#{item.ultLicData}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
                             <h:outputText value="Categoria"/>
                         </f:facet>
                         <h:outputText value="#{item.categoriaid.nome}"/>

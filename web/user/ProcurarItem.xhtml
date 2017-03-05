@@ -68,7 +68,13 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="Data da Ultima Licitação"/>
+                            <h:outputText value="Licitador Mais Alto"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bidder}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ultima Licitação"/>
                         </f:facet>
                         <h:outputText value="#{item.ultLicData}"/>
                     </h:column>
@@ -76,13 +82,13 @@
                         <f:facet name="header">
                             <h:outputText value="Vendedor"/>
                         </f:facet>
-                        <h:outputText value="#{item.vendedorid}"/>
+                        <h:outputText value="#{item.vendedorid.username}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Comprador"/>
                         </f:facet>
-                        <h:outputText value="#{item.compradorid}"/>
+                        <h:outputText value="#{item.compradorid.username}"/>
                     </h:column>
                 </h:dataTable>
             </h:panelGroup>
