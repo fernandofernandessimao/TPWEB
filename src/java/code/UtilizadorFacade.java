@@ -35,7 +35,7 @@ public class UtilizadorFacade implements UtilizadorFacadeLocal {
 
     @Override
     public void createNew(String nome, String morada, String username, String password) {
-        TUtilizador u = new TUtilizador(username, nome, morada, password);
+        TUtilizador u = new TUtilizador(nome, morada, username, password);
         u.setActivo(true);
         u.setConectado(true);
         u.setSaldo(500);
