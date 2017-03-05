@@ -20,7 +20,8 @@ import javax.inject.Named;
 
 @Named("itemController")
 @SessionScoped
-public class ItemController implements Serializable{
+public class ItemController implements Serializable {
+
     private DataModel items = null;
     @EJB
     private code.TItemFacade ejbFacade;
@@ -40,7 +41,7 @@ public class ItemController implements Serializable{
     int findId = 0;
     private int NumRes = 0;
     private List<TItem> result = new ArrayList<>();
-    
+
     public String getRazao() {
         return razao;
     }
@@ -96,25 +97,27 @@ public class ItemController implements Serializable{
     public void setResult(List<TItem> result) {
         this.result = result;
     }
-    
+
     private TItemFacade getFacade() {
         return ejbFacade;
     }
-    
+
     public void calculaIds() {
         NumRes = 0;
         result.clear();
         List<TItem> todas = iFacade.getAll();
-        if (findId == 0) {
+        if (findId <= 0) {
             return;
         }
-        for(int j=0;j<todas.size();j++){
-            if(todas.get(j).getId()==findId)
+        //result = todas;
+        for (int j = 0; j < todas.size(); j++) {
+            if (todas.get(j).getId() == findId) {
                 result.add(todas.get(j));
+            }
         }
         NumRes = result.size();
     }
-    
+
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -132,116 +135,122 @@ public class ItemController implements Serializable{
         }
         return pagination;
     }
-    
+
     public List<TItem> getAll() {
         return iFacade.getAll();
     }
-    
+
     public TItem getItem() {
         List<TItem> l = getAll();
         for (TItem i : l) {
-            if (i.getId()==id) {
+            if (i.getId() == id) {
                 return i;
             }
         }
         return null;
     }
-    
-    public void seguir(String username){
+
+    public void seguir(String username) {
         TUtilizador user = getUser(username);
-        if(user==null)
+        if (user == null) {
             return;
-        
+        }
+
         Collection<TItem> it = user.getTItemSegueCollection();
         Iterator<TItem> iter = it.iterator();
-        while(iter.hasNext()){
-            if(iter.next().getId()==id){
+        while (iter.hasNext()) {
+            if (iter.next().getId() == id) {
                 iFacade.seguir(user, getItem());
             }
         }
         iFacade.desseguir(user, getItem());
     }
-    
-    public void licitacar(String username){
+
+    public void licitacar(String username) {
         TUtilizador user = getUser(username);
-        if(user==null)
+        if (user == null) {
             return;
-        
+        }
+
         TItem item = getItem();
-        if(item==null)
+        if (item == null) {
             return;
-        
-        if(!item.getConcluido() && licitacao>item.getValor() && user.getSaldo()>=licitacao){
+        }
+
+        if (!item.getConcluido() && licitacao > item.getValor() && user.getSaldo() >= licitacao) {
             iFacade.licitar(user, item, licitacao);
-            if(licitacao>=item.getPrecoImediato()){
+            if (licitacao >= item.getPrecoImediato()) {
                 iFacade.setConcluido(item);
             }
         }
     }
-    
+
     public void comprar(String username) {
         FacesContext context = FacesContext.getCurrentInstance();
 
         TUtilizador user = getUser(username);
-        if(user==null){
+        if (user == null) {
             return;
         }
-        if(getItem().getConcluido() && !getItem().getComprado() && 
-                getItem().getValor() <= user.getSaldo() && 
-                user.getUsername().equals(getItem().getCompradorid().getUsername())){
+        if (getItem().getConcluido() && !getItem().getComprado()
+                && getItem().getValor() <= user.getSaldo()
+                && user.getUsername().equals(getItem().getCompradorid().getUsername())) {
             iFacade.setComprado(getItem());
             uFacade.increaseBalance(user, -getItem().getValor());
         }
     }
-    
+
     public String vendasRecentes() {
         FacesContext context = FacesContext.getCurrentInstance();
         String vr = "";
         TItem vra[] = new TItem[3];
         vra[0] = vra[1] = vra[2] = null;
-        List<TItem> it= iFacade.getAll();
-        
-        for(int i=0;i<it.size();i++){
+        List<TItem> it = iFacade.getAll();
+
+        for (int i = 0; i < it.size(); i++) {
             TItem item = it.get(i);
-            if(item.getComprado()){
-                if(vra[0] == null || item.getUltLicData().after(vra[0].getUltLicData())){
-                        vra[2] = vra[1];
-                        vra[1] = vra[0];
-                        vra[0] = item;
+            if (item.getComprado()) {
+                if (vra[0] == null || item.getUltLicData().after(vra[0].getUltLicData())) {
+                    vra[2] = vra[1];
+                    vra[1] = vra[0];
+                    vra[0] = item;
                 }
             }
         }
-        
-        if(vra[0]!=null)
+
+        if (vra[0] != null) {
             vr = "Descrição:" + vra[0].getDescricao() + "\nValor:" + vra[0].getValor() + "\n";
-        if(vra[1]!=null)    
+        }
+        if (vra[1] != null) {
             vr += "Descrição:" + vra[1].getDescricao() + "\nValor:" + vra[1].getValor() + "\n";
-        if(vra[2]!=null)
+        }
+        if (vra[2] != null) {
             vr += "Descrição:" + vra[2].getDescricao() + "\nValor:" + vra[2].getValor() + "\n";
-        
+        }
+
         return vr;
     }
-    
-    public String cancelar(){
-        if(!getItem().getConcluido() && !razao.isEmpty()){
+
+    public String cancelar() {
+        if (!getItem().getConcluido() && !razao.isEmpty()) {
             cFacade.cancelar(getItem(), razao);
             return "menuAdmin";
         }
         return null;
     }
-    
+
     public String prepareList() {
         recreateModel();
         return "List";
     }
-    
+
     public DataModel getItems() {
         if (items == null) {
             items = getPagination().createPageDataModel();
         }
         return items;
     }
-    
+
     public TUtilizador getUser(String username) {
         List<TUtilizador> l = uFacade.getAll();
         for (TUtilizador u : l) {
@@ -271,7 +280,7 @@ public class ItemController implements Serializable{
         recreateModel();
         return "List";
     }
-    
+
     public SelectItem[] getItemsAvailableSelectMany() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
     }
@@ -283,7 +292,7 @@ public class ItemController implements Serializable{
     public TItem getTItem(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
-    
+
     @FacesConverter(forClass = TItem.class)
     public static class TItemControllerConverter implements Converter {
 

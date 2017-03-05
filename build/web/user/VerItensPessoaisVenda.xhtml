@@ -3,14 +3,71 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/newTemplate.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="top">
-        Sistema de Leilão - Itens Pessoais á Venda
+        Sistema de Leilão - Itens Pessoais
     </ui:define>
 
     <ui:define name="content">
-        <h:commandLink value="Voltar" action="menuCliente"/>
+
+        <h:dataTable value="#{tutilizadorController.personalItens}"
+                     var="item"
+                     border="0"
+                     cellpadding="2"
+                     cellspacing="0"                     
+                     rules="all"
+                     style="border:solid 1px"
+                     >
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="id"/>
+                </f:facet>
+                <h:outputText value="#{item.id}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="categoria"/>
+                </f:facet>
+                <h:outputText value="#{item.categoriaid}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Descricao"/>
+                </f:facet>
+                <h:outputText value="#{item.descricao}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Valor atual"/>
+                </f:facet>
+                <h:outputText value="#{item.valor}"/>
+            </h:column>            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Preco Inicial"/>
+                </f:facet>
+                <h:outputText value="#{item.precoInicial}"/>
+            </h:column>            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Preco Imediato"/>
+                </f:facet>
+                <h:outputText value="#{item.precoImediato}"/>
+            </h:column>            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Prazo"/>
+                </f:facet>
+                <h:outputText value="#{item.prazo}"/>
+            </h:column>          
+        </h:dataTable>
+        <h:form>
+            <br></br>
+            <h:link value="Voltar" outcome="menuCliente"></h:link>
+        </h:form>
+
     </ui:define>
 
     <ui:define name="bottom">
@@ -18,4 +75,3 @@
     </ui:define>
 
 </ui:composition>
-

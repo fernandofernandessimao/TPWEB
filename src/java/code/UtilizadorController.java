@@ -137,16 +137,17 @@ public class UtilizadorController implements Serializable {
     public void calculaSomePessoas() {
         NumRes = 0;
         result.clear();
-        List<TUtilizador> todas = uFacade.getAll();
+        List<TUtilizador> todas = uFacade.getUsers(findname);
         // Este método não está nada optimizado
         // O filtro deverá ser feito na pesquisa à base de dados
         // exemplo, uma named query findByName
         if ((findname == null) || (findname.length() == 0)) {
             return;
         }
-        todas.stream().filter((p) -> (p.getUsername().contains(findname))).forEachOrdered((p) -> {
-            result.add(p);
-        });
+        result = todas;
+//        todas.stream().filter((p) -> (p.getUsername().contains(findname))).forEachOrdered((p) -> {
+//            result.add(p);
+//        });
         NumRes = result.size();
     }
 

@@ -8,6 +8,8 @@ public interface ItemFacadeLocal {
 
     List<TItem> getAll();
 
+    List<TItem> getItensByID(int id);
+    
     List<TItem> ListByCategoria();
 
     List<TItem> ListByDescricao();
@@ -15,6 +17,8 @@ public interface ItemFacadeLocal {
     List<TItem> ListByValor();
 
     List<TItem> ListByPrazo();
+    
+    List<TItem> getPersonalItens(TUtilizador user);
     
     public void addItem(TItem item);
     

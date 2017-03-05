@@ -26,12 +26,13 @@ public class UtilizadorFacade implements UtilizadorFacadeLocal {
                 getResultList();
     }
 
-    public TUtilizador getUser(String username){
+    @Override
+    public TUtilizador getUser(String username) {
         return (TUtilizador) dao.getEntityManager().createNamedQuery("TUtilizador.findByUsername")
                 .setParameter("username", username)
                 .getSingleResult();
     }
-    
+
     @Override
     public void createNew(String nome, String morada, String username, String password) {
         TUtilizador u = new TUtilizador(username, nome, morada, password);
@@ -85,7 +86,6 @@ public class UtilizadorFacade implements UtilizadorFacadeLocal {
 //        }
 //        return null;
 //    }
-
     @Override
     public void suspensionRequestUpdate(TUtilizador user, boolean value) {
         dao.getEntityManager().createNativeQuery("UPDATE t_utilizador SET activo='" + value + "' "
@@ -109,5 +109,12 @@ public class UtilizadorFacade implements UtilizadorFacadeLocal {
     public void changeConectado(TUtilizador user, boolean estado) {
         dao.getEntityManager().createNativeQuery("UPDATE t_utilizador SET conectado ='" + estado + "' "
                 + "WHERE username='" + user.getUsername() + "';").executeUpdate();
+    }
+
+    @Override
+    public List<TUtilizador> getUsers(String username) {
+        return dao.getEntityManager().createNamedQuery("TUtilizador.findByUsers")
+                .setParameter("username", "%" + username + "%")
+                .getResultList();
     }
 }

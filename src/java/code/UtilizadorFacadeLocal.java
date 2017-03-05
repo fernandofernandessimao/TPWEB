@@ -18,8 +18,10 @@ public interface UtilizadorFacadeLocal {
     List<TUtilizador> getAll();
 
     List<TUtilizador> findUsers(String username);
-    
+
     TUtilizador getUser(String username);
+
+    List<TUtilizador> getUsers(String username);
 
     void createNew(String username, String nome, String morada, String password);
 
@@ -36,6 +38,6 @@ public interface UtilizadorFacadeLocal {
     void suspensionRequestUpdate(TUtilizador user, boolean value);
 
     void reativacaoRequestUpdate(TUtilizador user, boolean value);
-    
+
     void changeConectado(TUtilizador user, boolean estado);
 }

@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "TItem.findAll", query = "SELECT t FROM TItem t")
     , @NamedQuery(name = "TItem.findById", query = "SELECT t FROM TItem t WHERE t.id = :id")
+    , @NamedQuery(name = "TItem.findItemsByID", query = "SELECT t FROM TItem t WHERE t.id like :id")
     , @NamedQuery(name = "TItem.findByDescricao", query = "SELECT t FROM TItem t WHERE t.descricao = :descricao")
     , @NamedQuery(name = "TItem.findByPrecoInicial", query = "SELECT t FROM TItem t WHERE t.precoInicial = :precoInicial")
     , @NamedQuery(name = "TItem.findByPrecoImediato", query = "SELECT t FROM TItem t WHERE t.precoImediato = :precoImediato")
@@ -43,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "TItem.findByValor", query = "SELECT t FROM TItem t WHERE t.valor = :valor")
     , @NamedQuery(name = "TItem.findByConcluido", query = "SELECT t FROM TItem t WHERE t.concluido = :concluido")
     , @NamedQuery(name = "TItem.findByComprado", query = "SELECT t FROM TItem t WHERE t.comprado = :comprado")
+    , @NamedQuery(name = "TItem.findByUser", query = "SELECT t FROM TItem t WHERE t.vendedorid = :vendedorid AND t.concluido = :concluido")
     , @NamedQuery(name = "TItem.findByUltLicData", query = "SELECT t FROM TItem t WHERE t.ultLicData = :ultLicData")})
 public class TItem implements Serializable {
 

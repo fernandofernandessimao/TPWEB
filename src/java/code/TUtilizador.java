@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "TUtilizador.findByNome", query = "SELECT t FROM TUtilizador t WHERE t.nome = :nome")
     , @NamedQuery(name = "TUtilizador.findByMorada", query = "SELECT t FROM TUtilizador t WHERE t.morada = :morada")
     , @NamedQuery(name = "TUtilizador.findByUsername", query = "SELECT t FROM TUtilizador t WHERE t.username = :username")    
+    , @NamedQuery(name = "TUtilizador.findByUsers", query = "SELECT t FROM TUtilizador t WHERE t.username like :username")    
     , @NamedQuery(name = "TUtilizador.findByPassword", query = "SELECT t FROM TUtilizador t WHERE t.password = :password")
     , @NamedQuery(name = "TUtilizador.findBySaldo", query = "SELECT t FROM TUtilizador t WHERE t.saldo = :saldo")
     , @NamedQuery(name = "TUtilizador.findByActivo", query = "SELECT t FROM TUtilizador t WHERE t.activo = :activo")

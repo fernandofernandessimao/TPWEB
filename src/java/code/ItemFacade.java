@@ -15,8 +15,8 @@ public class ItemFacade implements ItemFacadeLocal {
         return dao.getEntityManager().
                 createNamedQuery("TItem.findAll").
                 getResultList();
-    } 
-    
+    }
+
     @Override
     public List<TItem> ListByCategoria() {
         return dao.getEntityManager().createNamedQuery("SELECT t FROM TItem t ORDER BY t.categoriaid.nome").getResultList();
@@ -36,7 +36,7 @@ public class ItemFacade implements ItemFacadeLocal {
     public List<TItem> ListByPrazo() {
         return dao.getEntityManager().createNamedQuery("SELECT t FROM TItem t ORDER BY t.prazo").getResultList();
     }
-    
+
     @Override
     public void addItem(TItem item) {
         dao.getEntityManager().persist(item);
@@ -62,10 +62,24 @@ public class ItemFacade implements ItemFacadeLocal {
         dao.getEntityManager().createNativeQuery("UPDATE t_item SET concluido='" + true + "' "
                 + "WHERE id='" + item.getId() + "';").executeUpdate();
     }
-    
+
     @Override
     public void setComprado(TItem item) {
         dao.getEntityManager().createNativeQuery("UPDATE t_item SET comprado='" + true + "' "
                 + "WHERE id='" + item.getId() + "';").executeUpdate();
+    }
+
+    @Override
+    public List<TItem> getPersonalItens(TUtilizador user) {
+        return dao.getEntityManager().createNamedQuery("TItem.findByUser")
+                .setParameter("vendedorid", user).setParameter("concluido", false)
+                .getResultList();
+    }
+
+    @Override
+    public List<TItem> getItensByID(int id) {
+        return dao.getEntityManager().createNamedQuery("TItem.findItemsByID")
+                .setParameter("id", id)
+                .getResultList();
     }
 }
