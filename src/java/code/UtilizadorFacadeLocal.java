@@ -23,7 +23,7 @@ public interface UtilizadorFacadeLocal {
 
     List<TUtilizador> getUsers(String username);
 
-    void createNew(String username, String nome, String morada, String password);
+    void createNew(String nome, String morada, String username, String password);
 
     void changeName(TUtilizador user, String nome);
 

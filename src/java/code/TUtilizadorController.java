@@ -629,10 +629,6 @@ public class TUtilizadorController implements Serializable {
         return "menuAdmin";
     }
 
-    public Object[] getPersonalItens() {
-        return iFacade.getPersonalItens(getUser()).toArray();
-    }
-
     public String addItem() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (getPrecoCompreja() < getPrecoInicial()) {

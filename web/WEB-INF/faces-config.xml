@@ -20,5 +20,9 @@
             <base-name>/reativacao</base-name>
             <var>reativacao</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/licitar</base-name>
+            <var>licitar</var>
+        </resource-bundle>
     </application>
 </faces-config>

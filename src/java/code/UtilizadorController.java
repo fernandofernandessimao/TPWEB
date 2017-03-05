@@ -21,6 +21,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 
@@ -44,7 +45,7 @@ public class UtilizadorController implements Serializable {
     private CategoriaFacadeLocal cFacade;
     @EJB
     private ItemFacadeLocal iFacade;
-
+   
     final List<String> usersOnline = new ArrayList<>();
 
     List<TUtilizador> findUsers = new ArrayList<>();
@@ -652,14 +653,14 @@ public class UtilizadorController implements Serializable {
         return "menuAdmin";
     }
 
-    public String mostrarItensSeguidos(){
+    public String mostrarItensSeguidos() {
         String s = "";
-        
+
         Collection<TItem> itens = getUser().getTItemSegueCollection();
         Iterator<TItem> itemIter = itens.iterator();
-        while(itemIter.hasNext()){
+        while (itemIter.hasNext()) {
             TItem item = itemIter.next();
-            s += "ID:" + item.getId() 
+            s += "ID:" + item.getId()
                     + "\nDescrição:" + item.getDescricao()
                     + "\nPreço Inicial:" + item.getPrecoInicial()
                     + "\nPreço Compre-já:" + item.getPrecoImediato()
@@ -667,38 +668,38 @@ public class UtilizadorController implements Serializable {
                     + "\nCategoria:" + item.getCategoriaid().getNome()
                     + "\nVendedor:" + item.getVendedorid().getUsername() + "\n\n";
         }
-        
+
         return s;
     }
-    
-    public String historico(){
+
+    public String historico() {
         String s = "";
-        
+
         Collection<TItem> itensComprados = getUser().getTItemVendedorCollection();
         Iterator<TItem> itemIterCom = itensComprados.iterator();
-        while(itemIterCom.hasNext()){
+        while (itemIterCom.hasNext()) {
             TItem item = itemIterCom.next();
-            if(item.getComprado()){
-                s += "ID:" + item.getId() 
-                    + "\nDescrição:" + item.getDescricao()
-                    + "\nPreço Actual:" + item.getValor()
-                    + "\nVendedor:" + item.getVendedorid().getUsername() + "\n\n";
+            if (item.getComprado()) {
+                s += "ID:" + item.getId()
+                        + "\nDescrição:" + item.getDescricao()
+                        + "\nPreço Actual:" + item.getValor()
+                        + "\nVendedor:" + item.getVendedorid().getUsername() + "\n\n";
             }
         }
-        
+
         Collection<TItem> itensVenda = getUser().getTItemVendedorCollection();
         Iterator<TItem> itemIterVen = itensVenda.iterator();
-        while(itemIterVen.hasNext()){
+        while (itemIterVen.hasNext()) {
             TItem item = itemIterVen.next();
-            s += "ID:" + item.getId() 
+            s += "ID:" + item.getId()
                     + "\nDescrição:" + item.getDescricao()
                     + "\nPreço Actual:" + item.getValor()
                     + "\nComprador:" + item.getCompradorid().getUsername() + "\n\n";
         }
-        
+
         return s;
     }
-    
+
     public String addItem() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (getPrecoCompreja() < getPrecoInicial()) {
@@ -719,4 +720,47 @@ public class UtilizadorController implements Serializable {
         nFacade.addNewsLetter("Item criado", new Date(), "Item foi posto á venda pelo utilizador " + username);
         return "menuCliente";
     }
+
+    public static class TItemControllerConverter implements Converter {
+
+        @Override
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            ItemController controller = (ItemController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "itemController");
+            return controller.getTItem(getKey(value));
+        }
+
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
+            return key;
+        }
+
+        String getStringKey(java.lang.Integer value) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        @Override
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof TItem) {
+                TItem o = (TItem) object;
+                return getStringKey(o.getId());
+            } else {
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + TItem.class.getName());
+            }
+        }
+    }
+
+    public List<TItem> getPersonalItens() {
+        return iFacade.getPersonalItens(getUser());
+    }
+    
 }

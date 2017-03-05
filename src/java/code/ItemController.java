@@ -109,8 +109,8 @@ public class ItemController implements Serializable {
     public void setPor(int por) {
         this.por = por;
     }
-    
-    private TItemFacade getFacade() {
+
+    public TItemFacade getFacade() {
         return ejbFacade;
     }
 
@@ -129,49 +129,49 @@ public class ItemController implements Serializable {
         }
         NumRes = result.size();
     }
-    
+
     public void getItensPorCategoria() {
         NumRes = 0;
         result.clear();
         List<TItem> todas;
         todas = iFacade.ListByCategoria();
-                
+
         for (int j = 0; j < todas.size(); j++) {
             result.add(todas.get(j));
         }
         NumRes = result.size();
     }
-    
+
     public void getItensPorDescricao() {
         NumRes = 0;
         result.clear();
         List<TItem> todas;
         todas = iFacade.ListByDescricao();
-                
+
         for (int j = 0; j < todas.size(); j++) {
             result.add(todas.get(j));
         }
         NumRes = result.size();
     }
-    
+
     public void getItensPorPreco() {
         NumRes = 0;
         result.clear();
         List<TItem> todas;
         todas = iFacade.ListByValor();
-                
+
         for (int j = 0; j < todas.size(); j++) {
             result.add(todas.get(j));
         }
         NumRes = result.size();
     }
-    
+
     public void getItensPorPrazo() {
         NumRes = 0;
         result.clear();
         List<TItem> todas;
         todas = iFacade.ListByPrazo();
-                
+
         for (int j = 0; j < todas.size(); j++) {
             result.add(todas.get(j));
         }
@@ -215,7 +215,7 @@ public class ItemController implements Serializable {
         if (user == null) {
             return null;
         }
-        
+
         TItem item = getItem();
         if (item == null) {
             return null;
@@ -402,6 +402,5 @@ public class ItemController implements Serializable {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + TItem.class.getName());
             }
         }
-
     }
 }
