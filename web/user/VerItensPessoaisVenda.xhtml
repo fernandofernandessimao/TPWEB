@@ -10,74 +10,73 @@
         Sistema de Leilão - Itens Pessoais
     </ui:define>
     <ui:define name="content">
-        <h:form>
-            <h:dataTable value="#{utilizadorController.personalItens}"
-                         var="item"
-                         border="0"
-                         cellpadding="2"
-                         cellspacing="0"                     
-                         rules="all"
-                         style="border:solid 1px"
-                         >
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="id"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="categoria"/>
-                    </f:facet>
-                    <h:outputText value="#{item.categoriaid.nome}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Descricao"/>
-                    </f:facet>
-                    <h:outputText value="#{item.descricao}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Valor atual"/>
-                    </f:facet>
-                    <h:outputText value="#{item.valor}"/>
-                </h:column>            
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Preco Inicial"/>
-                    </f:facet>
-                    <h:outputText value="#{item.precoInicial}"/>
-                </h:column>            
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Preco Imediato"/>
-                    </f:facet>
-                    <h:outputText value="#{item.precoImediato}"/>
-                </h:column>            
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Prazo"/>
-                    </f:facet>
-                    <h:outputText value="#{item.prazo}"/>
-                </h:column>  
-            </h:dataTable>
-        </h:form>
-        <h:form>
-            <br/>
-            <h:outputLabel value="Licitações ID do item:" for="licitacoes"/>
-            <h:inputText id="licitacoes"
-                         value="#{licitacaoController.id}"
-                         required="true"                             
-                         requiredMessage="Falta o ID do item"/>
-            <br/>
-            <h:link value="Mostrar" outcome="LicitacoesItem"></h:link>
-            <br/>
-            <h:link value="Voltar" outcome="menuCliente"></h:link>
-        </h:form>
-
+        <h:panelGroup id="teste">
+            <h:form>
+                <h:dataTable value="#{utilizadorController.personalItens}"
+                             var="item"
+                             border="0"
+                             cellpadding="2"
+                             cellspacing="0"                     
+                             rules="all"
+                             style="border:solid 1px"
+                             >
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="id"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="categoria"/>
+                        </f:facet>
+                        <h:outputText value="#{item.categoriaid.nome}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Descricao"/>
+                        </f:facet>
+                        <h:outputText value="#{item.descricao}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Valor atual"/>
+                        </f:facet>
+                        <h:outputText value="#{item.valor}"/>
+                    </h:column>            
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Preco Inicial"/>
+                        </f:facet>
+                        <h:outputText value="#{item.precoInicial}"/>
+                    </h:column>            
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Preco Imediato"/>
+                        </f:facet>
+                        <h:outputText value="#{item.precoImediato}"/>
+                    </h:column>            
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Prazo"/>
+                        </f:facet>
+                        <h:outputText value="#{item.prazo}"/>
+                    </h:column>  
+                </h:dataTable>        
+                <br/>
+                <h:outputLabel value="Licitações ID do item:" for="licitacoes"/>
+                <br/>
+                <h:inputText id="licitacoes"
+                             value="#{licitacaoController.id}"
+                             required="true"                             
+                             requiredMessage="Falta o ID do item"/>
+                <br/>
+                <h:commandButton value="Mostrar" action="#{licitacaoController.goToLicitacoes()}" type="submit"/>    
+                <br/>
+                <h:link value="Voltar" outcome="menuCliente"></h:link>
+            </h:form>
+        </h:panelGroup>
     </ui:define>
-
     <ui:define name="bottom">
         Plataformas de Desenvolvimento - 2016/2017
     </ui:define>
