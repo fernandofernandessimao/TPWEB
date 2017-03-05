@@ -13,16 +13,16 @@
     <ui:define name="content">
         <h:form>
             <h:commandButton value="Listar por Categoria">
-                <f:ajax render="resultados" transient="true" event="click" listener="#{itemController.getItensPor(1)}"/>
+                <f:ajax render="resultados" transient="true" event="click" listener="#{itemController.getItensPorCategoria()}"/>
             </h:commandButton><br/><br/>
             <h:commandButton value="Listar por Descrição">
-                <f:ajax render="resultados" transient="true" event="click" listener="#{itemController.getItensPor(2)}"/>
+                <f:ajax render="resultados" transient="true" event="click" listener="#{itemController.getItensPorDescricao()}"/>
             </h:commandButton><br/><br/>
             <h:commandButton value="Listar por Preço">
-                <f:ajax render="resultados" transient="true" event="click" listener="#{itemController.getItensPor(3)}"/>
+                <f:ajax render="resultados" transient="true" event="click" listener="#{itemController.getItensPorPreco()}"/>
             </h:commandButton><br/><br/>
             <h:commandButton value="Listar por Prazo">
-                <f:ajax render="resultados" transient="true" event="click" listener="#{itemController.getItensPor(4)}"/>
+                <f:ajax render="resultados" transient="true" event="click" listener="#{itemController.getItensPorPrazo()}"/>
             </h:commandButton><br/><br/>
             <h:panelGroup id="resultados">
 

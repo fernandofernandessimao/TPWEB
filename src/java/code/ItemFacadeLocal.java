@@ -31,4 +31,6 @@ public interface ItemFacadeLocal {
     void setConcluido(TItem item);
 
     void setComprado(TItem item);
+    
+    void setComprador(TUtilizador user, TItem item);
 }

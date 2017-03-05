@@ -67,10 +67,8 @@ public class ItemFacade implements ItemFacadeLocal {
         tl.setData(new Date());
         tl.setValor(valor);
         dao.getEntityManager().persist(tl);
-        
-        item.setValor(valor);
-        item.setBidder(user.getUsername());
-        dao.getEntityManager().persist(item);
+        dao.getEntityManager().createNativeQuery("UPDATE t_item SET valor='" + valor + "', bidder='" + user.getUsername() + "'"
+                + "WHERE id='" + item.getId() + "';").executeUpdate();
     }
 
     @Override
@@ -82,6 +80,12 @@ public class ItemFacade implements ItemFacadeLocal {
     @Override
     public void setComprado(TItem item) {
         dao.getEntityManager().createNativeQuery("UPDATE t_item SET comprado='" + true + "' "
+                + "WHERE id='" + item.getId() + "';").executeUpdate();
+    }
+    
+    @Override
+    public void setComprador(TUtilizador user, TItem item) {
+        dao.getEntityManager().createNativeQuery("UPDATE t_item SET compradorid='" + user.getUsername() + "' "
                 + "WHERE id='" + item.getId() + "';").executeUpdate();
     }
 

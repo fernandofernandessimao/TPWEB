@@ -38,6 +38,7 @@ public class ItemController implements Serializable {
     String mensagem;
     float licitacao;
     String razao;
+    int por;
     int findId = 0;
     private int NumRes = 0;
     private List<TItem> result = new ArrayList<>();
@@ -98,6 +99,14 @@ public class ItemController implements Serializable {
         this.result = result;
     }
 
+    public int getPor() {
+        return por;
+    }
+
+    public void setPor(int por) {
+        this.por = por;
+    }
+    
     private TItemFacade getFacade() {
         return ejbFacade;
     }
@@ -118,29 +127,47 @@ public class ItemController implements Serializable {
         NumRes = result.size();
     }
     
-    public void getItensPor(int por) {
+    public void getItensPorCategoria() {
         NumRes = 0;
         result.clear();
         List<TItem> todas;
-        if (findId <= 0) {
-            return;
+        todas = iFacade.ListByCategoria();
+                
+        for (int j = 0; j < todas.size(); j++) {
+            result.add(todas.get(j));
         }
-        switch(por){
-        case 1:
-            todas = iFacade.ListByCategoria();
-            break;
-        case 2:
-            todas = iFacade.ListByDescricao();
-            break;
-        case 3:
-            todas = iFacade.ListByValor();
-            break;
-        case 4:
-            todas = iFacade.ListByPrazo();
-            break;
-        default:
-            return;
+        NumRes = result.size();
+    }
+    
+    public void getItensPorDescricao() {
+        NumRes = 0;
+        result.clear();
+        List<TItem> todas;
+        todas = iFacade.ListByDescricao();
+                
+        for (int j = 0; j < todas.size(); j++) {
+            result.add(todas.get(j));
         }
+        NumRes = result.size();
+    }
+    
+    public void getItensPorPreco() {
+        NumRes = 0;
+        result.clear();
+        List<TItem> todas;
+        todas = iFacade.ListByValor();
+                
+        for (int j = 0; j < todas.size(); j++) {
+            result.add(todas.get(j));
+        }
+        NumRes = result.size();
+    }
+    
+    public void getItensPorPrazo() {
+        NumRes = 0;
+        result.clear();
+        List<TItem> todas;
+        todas = iFacade.ListByPrazo();
                 
         for (int j = 0; j < todas.size(); j++) {
             result.add(todas.get(j));
@@ -217,24 +244,27 @@ public class ItemController implements Serializable {
             iFacade.licitar(user, item, licitacao);
             if (licitacao >= item.getPrecoImediato()) {
                 iFacade.setConcluido(item);
+                iFacade.setComprador(user, item);
             }
         }
         return "menuCliente";
     }
 
-    public void comprar(String username) {
+    public String comprar(String username) {
         FacesContext context = FacesContext.getCurrentInstance();
 
         TUtilizador user = getUser(username);
         if (user == null) {
-            return;
+            return null;
         }
         if (getItem().getConcluido() && !getItem().getComprado()
                 && getItem().getValor() <= user.getSaldo()
                 && user.getUsername().equals(getItem().getCompradorid().getUsername())) {
             iFacade.setComprado(getItem());
-            uFacade.increaseBalance(user, -getItem().getValor());
+            uFacade.increaseBalance(user, user.getSaldo()-getItem().getValor());
+            return "menuCliente";
         }
+        return null;
     }
 
     public String vendasRecentes() {
