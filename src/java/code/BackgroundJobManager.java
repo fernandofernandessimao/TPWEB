@@ -29,9 +29,10 @@ public class BackgroundJobManager {
         Date d = new Date();
         List<TItem> l = iFacade.getAll();
         for(int i=0;i<l.size();i++){
-            if (!d.before(l.get(i).getPrazo())) {
+            if (!d.before(l.get(i).getPrazo()) && !l.get(i).getConcluido()) {
                 iFacade.setConcluido(l.get(i));
-                iFacade.setComprador(getUser(l.get(i).getBidder()), l.get(i));
+                if(l.get(i).getBidder()!=null)
+                    iFacade.setComprador(getUser(l.get(i).getBidder()), l.get(i));
             }
         }
     }
