@@ -5,6 +5,7 @@ import code.util.PaginationHelper;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -33,6 +34,8 @@ public class ItemController implements Serializable {
     private MensagemFacadeLocal mFacade;
     @EJB
     private CancelamentoFacadeLocal cFacade;
+    @EJB
+    private NewsletterFacadeLocal nFacade;
     private PaginationHelper pagination;
     int id;
     String mensagem;
@@ -262,6 +265,7 @@ public class ItemController implements Serializable {
                 && user.getUsername().equals(getItem().getCompradorid().getUsername())) {
             iFacade.setComprado(getItem());
             uFacade.increaseBalance(user, user.getSaldo()-getItem().getValor());
+            nFacade.addNewsLetter("Compra Concluida", new Date(), "O utilizador " + user.getUsername() + " concluio a compra do item com id " + getItem().getId());
             return "menuCliente";
         }
         return null;
@@ -301,6 +305,7 @@ public class ItemController implements Serializable {
     public String cancelar() {
         if (!getItem().getConcluido() && !razao.isEmpty()) {
             cFacade.cancelar(getItem(), razao);
+            nFacade.addNewsLetter("Item Cancelado", new Date(), "O leilão do item com id " + getItem().getId() + " foi cancelado");
             return "menuAdmin";
         }
         return null;

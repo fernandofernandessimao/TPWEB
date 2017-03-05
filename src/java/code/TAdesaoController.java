@@ -103,8 +103,8 @@ public class TAdesaoController implements Serializable {
             current.setDataProc(date);
 
             if (!current.getPendente() && current.getAceite()) {
-                nFacade.addNewsLetter("Adesão Aceita", date, "Pedido de Adesão efetuado por " + current.getUsername() + "aceito.");
-                uFacade.createNew(current.getUsername(), current.getNome(), current.getMorada(), current.getPassword());
+                nFacade.addNewsLetter("Adesão Aceita", date, "Pedido de Adesão efetuado por " + current.getUsername() + " aceito.");
+                uFacade.createNew(current.getNome(), current.getMorada(),current.getUsername(), current.getPassword());
             } else {
                 nFacade.addNewsLetter("Adesão Negada", date, "Pedido de Adesão efetuado por " + current.getUsername() + " recusado. Motivo: " + current.getRazaoRej());
             }
