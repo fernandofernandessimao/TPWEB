@@ -715,8 +715,8 @@ public class UtilizadorController implements Serializable {
         i.setVendedorid(getUser());
         Date currentDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(getDays()));
         i.setPrazo(currentDate);
-        iFacade.addItem(i);
-        nFacade.addNewsLetter("Item criado", new Date(), "Item " + i.getId() +" foi posto á venda pelo utilizador " + username);
+        //iFacade.addItem(i);
+        nFacade.addNewsLetter("Item criado", new Date(), "Item foi posto á venda pelo utilizador " + username);
         return "menuCliente";
     }
 }
