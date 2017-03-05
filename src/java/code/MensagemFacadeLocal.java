@@ -16,6 +16,8 @@ import javax.ejb.Local;
 public interface MensagemFacadeLocal {
 
     List<TMensagem> getAll(TUtilizador user);
+    
+    List<TMensagem> getAllMensagens();
 
     void sendMessage(TMensagem m);
 

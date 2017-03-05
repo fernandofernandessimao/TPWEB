@@ -97,6 +97,7 @@ public class UtilizadorController implements Serializable {
 
     private int NumRes = 0;
     private List<TUtilizador> result = new ArrayList<>();
+    private List<TMensagem> resultMens = new ArrayList<>();
 
     public String getDescricao() {
         return descricao;
@@ -150,11 +151,31 @@ public class UtilizadorController implements Serializable {
 //        });
         NumRes = result.size();
     }
+    
+    public void calculaNumMensagens() {
+        NumRes = 0;
+        resultMens.clear();
+        List<TMensagem> todas = mFacade.getAllMensagens();
+        for (int j = 0; j < todas.size(); j++) {
+            if(todas.get(j).getReceptorid().getUsername().equals(username)){
+                resultMens.add(todas.get(j));
+            }
+        }
+        NumRes = resultMens.size();
+    }
 
     public List<TUtilizador> getSomePessoas() {
         return result;
     }
 
+    public List<TMensagem> getResultMens() {
+        return resultMens;
+    }
+
+    public void setResultMens(List<TMensagem> resultMens) {
+        this.resultMens = resultMens;
+    }
+    
     public String getOldPassword() {
         return oldPassword;
     }

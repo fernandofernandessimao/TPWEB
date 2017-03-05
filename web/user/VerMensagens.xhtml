@@ -3,7 +3,8 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/newTemplate.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="top">
         Sistema de Leilão - Mensagens Recebidas
@@ -11,6 +12,48 @@
 
     <ui:define name="content">
         <h:form>
+            <h:commandButton value="Buscar Mensagens">
+                <f:ajax render="resultados" transient="true" event="click" listener="#{utilizadorController.calculaNumMensagens()}"/>
+            </h:commandButton><br/>
+            <h:panelGroup id="resultados">
+
+                <h:panelGroup id ="resultadosNum"
+                              rendered="#{utilizadorController.numRes gt 0}">
+                    Número de Mensagens: #{utilizadorController.numRes}
+                    <br/><br/>
+                </h:panelGroup>
+
+                <h:dataTable id ="resultadosLista"
+                         rendered="#{utilizadorController.numRes gt 0}"
+                         value="#{utilizadorController.resultMens}"
+                         var="item"
+                         border="0"
+                         cellpadding="2"
+                         cellspacing="0"
+                         rowClasses="linhas_impares,linhas_pares"
+                         rules="all"
+                         style="border:solid 1px"
+                         >
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="De:"/>
+                        </f:facet>
+                        <h:outputText value="#{item.senderid.username}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Acerca do Item"/>
+                        </f:facet>
+                        <h:outputText value="#{item.itemid.id}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Mensagem"/>
+                        </f:facet>
+                        <h:outputText value="#{item.mensagem}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:panelGroup>   
             <h:commandLink value="Voltar" action="menuCliente"/>
         </h:form>
     </ui:define>
