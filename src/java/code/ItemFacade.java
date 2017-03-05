@@ -44,17 +44,30 @@ public class ItemFacade implements ItemFacadeLocal {
 
     @Override
     public void seguir(TUtilizador user, TItem item) {
-        dao.getEntityManager().createNativeQuery("INSERT INTO t_segue (utilizadorid, itemid) VALUES (?,?)").setParameter(1, user).setParameter(2, item).executeUpdate();
+        user.getTItemSegueCollection().add(item);
+        item.getTUtilizadorSegueCollection().add(user);
+        dao.getEntityManager().merge(user);
+        dao.getEntityManager().merge(item);
     }
 
     @Override
     public void desseguir(TUtilizador user, TItem item) {
-        dao.getEntityManager().createNativeQuery("DELETE FROM t_segue WHERE utilizadorid='" + user + "' AND itemid='" + item + "'").executeUpdate();
+        user.getTItemSegueCollection().remove(item);
+        item.getTUtilizadorSegueCollection().remove(user);
+        dao.getEntityManager().merge(user);
+        dao.getEntityManager().merge(item);
     }
 
     @Override
     public void licitar(TUtilizador user, TItem item, float valor) {
-        dao.getEntityManager().createNativeQuery("INSERT INTO t_licitacao (utilizadorid, itemid) VALUES (?,?)").setParameter(1, user).setParameter(2, item).executeUpdate();
+        user.getTItemLicitacaoCollection().add(item);
+        item.getTUtilizadorLicitacaoCollection().add(user);
+        dao.getEntityManager().merge(user);
+        dao.getEntityManager().merge(item);
+        
+        item.setValor(valor);
+        item.setCompradorid(user);
+        dao.getEntityManager().persist(item);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class CancelamentoFacade implements CancelamentoFacadeLocal {
         c.setRazao(razao);
         c.setDataCanc(new Date());
         dao.getEntityManager().persist(c);
-        dao.getEntityManager().createNativeQuery("UPDATE t_item SET concluido='" + true + "'"
+        dao.getEntityManager().createNativeQuery("UPDATE t_item SET concluido='" + true + "', compradorid='admin'"
                 + "WHERE id='" + item.getId() + "';").executeUpdate();
     }
 }

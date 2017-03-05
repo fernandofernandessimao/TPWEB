@@ -150,39 +150,46 @@ public class ItemController implements Serializable {
         return null;
     }
 
-    public void seguir(String username) {
+    public String seguir(String username) {
         TUtilizador user = getUser(username);
         if (user == null) {
-            return;
+            return null;
+        }
+        
+        TItem item = getItem();
+        if (item == null) {
+            return null;
         }
 
         Collection<TItem> it = user.getTItemSegueCollection();
         Iterator<TItem> iter = it.iterator();
         while (iter.hasNext()) {
             if (iter.next().getId() == id) {
-                iFacade.seguir(user, getItem());
+                iFacade.desseguir(user, getItem());
             }
         }
-        iFacade.desseguir(user, getItem());
+        iFacade.seguir(user, getItem());
+        return "menuCliente";
     }
 
-    public void licitacar(String username) {
+    public String licitacar(String username) {
         TUtilizador user = getUser(username);
         if (user == null) {
-            return;
+            return null;
         }
 
         TItem item = getItem();
         if (item == null) {
-            return;
+            return null;
         }
 
-        if (!item.getConcluido() && licitacao > item.getValor() && user.getSaldo() >= licitacao) {
+        if (!item.getConcluido() && licitacao > item.getValor() && user.getSaldo() >= licitacao && licitacao >= item.getPrecoInicial()) {
             iFacade.licitar(user, item, licitacao);
             if (licitacao >= item.getPrecoImediato()) {
                 iFacade.setConcluido(item);
             }
         }
+        return "menuCliente";
     }
 
     public void comprar(String username) {
